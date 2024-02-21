@@ -44,6 +44,7 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
 	log.Infoc(ctx, "task %s is processing", task.Type())
+	log.Debugc(ctx, "task payload: %+v", vcPayload)
 
 	cmd := entities.InferenceCommand{
 		Prompt:            vcPayload.Prompt,
