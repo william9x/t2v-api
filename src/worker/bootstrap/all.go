@@ -43,9 +43,9 @@ func All() fx.Option {
 		fx.Provide(fx.Annotate(
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
 		),
-		//fx.Provide(fx.Annotate(
-		//	adapter.NewSoVitsVCAdapter, fx.As(new(ports.InferencePort))),
-		//),
+		fx.Provide(fx.Annotate(
+			adapter.NewAnimateLCMAdapter, fx.As(new(ports.InferencePort))),
+		),
 
 		// Provide task handlers
 		handlers.ProvideHandler(handlers.NewT2VHandler),
