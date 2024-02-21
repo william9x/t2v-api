@@ -45,8 +45,6 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	}
 	log.Infoc(ctx, "task %s is processing", task.Type())
 
-	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
-
 	cmd := entities.InferenceCommand{
 		Prompt:            vcPayload.Prompt,
 		NegativePrompt:    vcPayload.NegativePrompt,
@@ -55,12 +53,13 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		Width:             vcPayload.Width,
 		Height:            vcPayload.Height,
 		GuidanceScale:     vcPayload.GuidanceScale,
+		OutputFilePath:    fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName),
 	}
 	if err := r.inferencePort.Infer(ctx, cmd); err != nil {
 		return err
 	}
 
-	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
+	if err := r.objectStoragePort.UploadFilePath(ctx, cmd.OutputFilePath, vcPayload.TargetFileName); err != nil {
 		return err
 	}
 
