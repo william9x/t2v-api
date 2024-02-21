@@ -21,18 +21,9 @@ func NewAnimateLCMAdapter(client *http.Client, props *properties.AnimateLCMPrope
 	return &AnimateLCMAdapter{client: client, props: props}
 }
 
-func (r *AnimateLCMAdapter) Infer(ctx context.Context, payload entities.InferenceCommand) error {
-	req := entities.InferenceCommand{
-		Prompt:            payload.Prompt,
-		NegativePrompt:    payload.NegativePrompt,
-		NumInferenceSteps: payload.NumInferenceSteps,
-		NumFrames:         payload.NumFrames,
-		Width:             payload.Width,
-		Height:            payload.Height,
-		GuidanceScale:     payload.GuidanceScale,
-	}
+func (r *AnimateLCMAdapter) Infer(ctx context.Context, cmd entities.InferenceCommand) error {
 	buf := new(bytes.Buffer)
-	if err := json.NewEncoder(buf).Encode(req); err != nil {
+	if err := json.NewEncoder(buf).Encode(cmd); err != nil {
 		return fmt.Errorf("encoding request error: %v", err)
 	}
 
