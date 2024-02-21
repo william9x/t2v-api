@@ -1,0 +1,4 @@
+app:
+  models.data:
+    - ID: animate_lcm
+      Name: AnimeLCM

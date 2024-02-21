@@ -1,0 +1,227 @@
+definitions:
+  resources.CreateInference:
+    properties:
+      deadline:
+        description: Deadline for completing the task
+        type: string
+      id:
+        type: string
+      max_retry:
+        type: integer
+      model:
+        type: string
+      retention:
+        description: Retention in hours for how long to store the task info
+        type: string
+      status:
+        description: 'Status of the task. Values: active, pending, scheduled, retry,
+          archived, completed'
+        type: string
+      type:
+        type: string
+    type: object
+  resources.Inference:
+    properties:
+      deadline:
+        description: Deadline for completing the task
+        type: string
+      id:
+        type: string
+      last_err:
+        type: string
+      last_failed_at:
+        type: integer
+      max_retry:
+        type: integer
+      model:
+        type: string
+      retried:
+        type: integer
+      status:
+        description: 'Status of the task. Values: active, pending, scheduled, retry,
+          archived, completed'
+        type: string
+      target_file_url:
+        type: string
+      type:
+        type: string
+    type: object
+  resources.Model:
+    properties:
+      category:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  response.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/response.Meta'
+    type: object
+info:
+  contact: {}
+  title: Voice Changer API Public
+  version: 1.0.0
+paths:
+  /api/v1/infer:
+    post:
+      consumes:
+      - multipart/form-data
+      operationId: create-inference
+      parameters:
+      - default: animate_lcm
+        description: AI model ID
+        in: formData
+        name: model
+        required: true
+        type: string
+      - default: t2v
+        description: Infer type
+        enum:
+        - t2v
+        - i2v
+        - v2v
+        - upscale
+        in: formData
+        name: type
+        type: string
+      - description: The prompt or prompts to guide image generation.
+        in: formData
+        maxLength: 1000
+        minLength: 1
+        name: prompt
+        required: true
+        type: string
+      - description: The prompt or prompts to guide what to not include in image generation.
+        in: formData
+        name: negative_prompt
+        type: string
+      - default: 25
+        description: More steps usually lead to a higher quality image at the expense
+          of slower inference
+        in: formData
+        maximum: 25
+        minimum: 1
+        name: num_inference_steps
+        type: integer
+      - default: 16
+        description: 'The number of video frames to generate. Default FPS: 8'
+        in: formData
+        maximum: 16
+        minimum: 16
+        name: num_frames
+        type: integer
+      - default: 512
+        description: The width in pixels of the generated image/video.
+        in: formData
+        name: width
+        type: integer
+      - default: 512
+        description: The height in pixels of the generated image/video.
+        in: formData
+        name: height
+        type: integer
+      - default: 2
+        description: A higher guidance scale value encourages the model to generate
+          images closely linked to the `prompt` at the expense of lower image quality.
+        in: formData
+        maximum: 100
+        minimum: 0
+        name: guidance_scale
+        type: number
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.CreateInference'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Create an inference task
+      tags:
+      - InferenceController
+  /api/v1/infer/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: get-inference
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.Inference'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get status of an inference task
+      tags:
+      - InferenceController
+  /api/v1/models:
+    get:
+      consumes:
+      - application/json
+      operationId: get-models
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.Model'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get list supported models
+      tags:
+      - ModelController
+swagger: "2.0"

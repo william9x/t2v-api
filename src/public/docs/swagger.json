@@ -1,0 +1,341 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Voice Changer API Public",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/infer": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InferenceController"
+                ],
+                "summary": "Create an inference task",
+                "operationId": "create-inference",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "animate_lcm",
+                        "description": "AI model ID",
+                        "name": "model",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "t2v",
+                            "i2v",
+                            "v2v",
+                            "upscale"
+                        ],
+                        "type": "string",
+                        "default": "t2v",
+                        "description": "Infer type",
+                        "name": "type",
+                        "in": "formData"
+                    },
+                    {
+                        "maxLength": 1000,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The prompt or prompts to guide image generation.",
+                        "name": "prompt",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "The prompt or prompts to guide what to not include in image generation.",
+                        "name": "negative_prompt",
+                        "in": "formData"
+                    },
+                    {
+                        "maximum": 25,
+                        "minimum": 1,
+                        "type": "integer",
+                        "default": 25,
+                        "description": "More steps usually lead to a higher quality image at the expense of slower inference",
+                        "name": "num_inference_steps",
+                        "in": "formData"
+                    },
+                    {
+                        "maximum": 16,
+                        "minimum": 16,
+                        "type": "integer",
+                        "default": 16,
+                        "description": "The number of video frames to generate. Default FPS: 8",
+                        "name": "num_frames",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 512,
+                        "description": "The width in pixels of the generated image/video.",
+                        "name": "width",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 512,
+                        "description": "The height in pixels of the generated image/video.",
+                        "name": "height",
+                        "in": "formData"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number",
+                        "default": 2,
+                        "description": "A higher guidance scale value encourages the model to generate images closely linked to the `prompt` at the expense of lower image quality.",
+                        "name": "guidance_scale",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/resources.CreateInference"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/infer/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InferenceController"
+                ],
+                "summary": "Get status of an inference task",
+                "operationId": "get-inference",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/resources.Inference"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/models": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ModelController"
+                ],
+                "summary": "Get list supported models",
+                "operationId": "get-models",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/resources.Model"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "resources.CreateInference": {
+            "type": "object",
+            "properties": {
+                "deadline": {
+                    "description": "Deadline for completing the task",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "max_retry": {
+                    "type": "integer"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "retention": {
+                    "description": "Retention in hours for how long to store the task info",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "resources.Inference": {
+            "type": "object",
+            "properties": {
+                "deadline": {
+                    "description": "Deadline for completing the task",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_err": {
+                    "type": "string"
+                },
+                "last_failed_at": {
+                    "type": "integer"
+                },
+                "max_retry": {
+                    "type": "integer"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "retried": {
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
+                    "type": "string"
+                },
+                "target_file_url": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "resources.Model": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Meta": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "meta": {
+                    "$ref": "#/definitions/response.Meta"
+                }
+            }
+        }
+    }
+}

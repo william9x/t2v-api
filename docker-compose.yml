@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+#  api:
+#    container_name: t2v-api
+#    image: namnam206/t2v-api:latest
+#    restart: always
+#    links:
+#      - redis
+#    depends_on:
+#      - redis
+#    networks:
+#      - backend-private
+#    ports:
+#      - "80:8080"
+#    environment:
+#      APP_PROFILES: local,dev
+
+#  worker:
+#    container_name: t2v-worker
+#    image: namnam206/t2v-worker:latest
+#    restart: always
+#    links:
+#      - redis
+#      - svc-adapter
+#    depends_on:
+#      - redis
+#      - svc-adapter
+#    networks:
+#      - backend-private
+#    environment:
+#      APP_PROFILES: dev
+
+  redis:
+    container_name: t2v-redis
+    image: bitnami/redis:latest
+    restart: always
+#    volumes:
+#      - /opt/redis/data:/bitnami/redis/data
+    networks:
+      - backend-private
+    ports:
+      - "6379:6379"
+    environment:
+      ALLOW_EMPTY_PASSWORD: no
+      REDIS_PASSWORD: braly@123
+
+  asynqmon:
+    container_name: t2v-asynqmon
+    image: hibiken/asynqmon:latest
+    restart: always
+    networks:
+      - backend-private
+    ports:
+      - "8085:8080"
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      REDIS_ADDR: redis:6379
+      REDIS_DB: 1
+      REDIS_PASSWORD: braly@123
+      READ_ONLY: false
+
+networks:
+  backend-private:
+    driver: bridge # default network driver type
