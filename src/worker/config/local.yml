@@ -23,4 +23,4 @@ app:
     Queues:
       t2v_default: 10
     Worker:
-      Concurrency: 10
+      Concurrency: 1

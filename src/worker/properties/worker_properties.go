@@ -15,5 +15,5 @@ type WorkerProperties struct {
 }
 
 func (r *WorkerProperties) Prefix() string {
-	return "app.worker"
+	return "app.asynq.worker"
 }
