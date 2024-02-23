@@ -1,25 +1,4 @@
 definitions:
-  resources.CreateInference:
-    properties:
-      deadline:
-        description: Deadline for completing the task
-        type: string
-      id:
-        type: string
-      max_retry:
-        type: integer
-      model:
-        type: string
-      retention:
-        description: Retention in hours for how long to store the task info
-        type: string
-      status:
-        description: 'Status of the task. Values: active, pending, scheduled, retry,
-          archived, completed'
-        type: string
-      type:
-        type: string
-    type: object
   resources.Inference:
     properties:
       deadline:
@@ -48,11 +27,24 @@ definitions:
     type: object
   resources.Model:
     properties:
-      category:
-        type: string
       id:
         type: string
+      logo_url:
+        type: string
       name:
+        type: string
+      recomd_prompts:
+        items:
+          $ref: '#/definitions/resources.RecomdPrompt'
+        type: array
+    type: object
+  resources.RecomdPrompt:
+    properties:
+      logo_url:
+        type: string
+      neg_prompt:
+        type: string
+      prompt:
         type: string
     type: object
   response.Meta:
@@ -149,7 +141,7 @@ paths:
             - $ref: '#/definitions/response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/resources.CreateInference'
+                  $ref: '#/definitions/resources.Inference'
               type: object
         "400":
           description: Bad Request

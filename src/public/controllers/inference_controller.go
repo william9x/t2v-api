@@ -85,7 +85,7 @@ func (c *InferenceController) GetInference(ctx *gin.Context) {
 //	@Param			width					formData		int				false	"The width in pixels of the generated image/video." default(512)
 //	@Param			height					formData		int				false	"The height in pixels of the generated image/video." default(512)
 //	@Param			guidance_scale			formData		float32			false	"A higher guidance scale value encourages the model to generate images closely linked to the `prompt` at the expense of lower image quality." default(2) minimum(0) maximum(100)
-//	@Success		201		{object}	response.Response{data=resources.Infer}
+//	@Success		201		{object}	response.Response{data=resources.Inference}
 //	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]

@@ -31,10 +31,5 @@ func NewModelController(
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/models [get]
 func (c *ModelController) GetModels(ctx *gin.Context) {
-	models := make([]*resources.Model, 0, len(c.modelProps.Data))
-	for _, model := range c.modelProps.Data {
-		models = append(models, resources.NewModelResource(model.ID, model.Name, model.Category))
-	}
-
-	response.Write(ctx.Writer, response.Ok(models))
+	response.Write(ctx.Writer, response.Ok(resources.FromModelProps(c.modelProps)))
 }

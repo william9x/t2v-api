@@ -1,4 +1,44 @@
 app:
   models.data:
-    - ID: animate_lcm
-      Name: AnimeLCM
+    - ID: animate_lcm_pixar
+      Name: Pixar
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+    - ID: animate_lcm_anime
+      Name: Anime
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+    - ID: animate_lcm_realistic
+      Name: Realistic
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+    - ID: animate_lcm_pixel
+      Name: Pixel art
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+    - ID: animate_lcm_sticker
+      Name: Sticker
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+    - ID: animate_lcm_retro
+      Name: Retro
+      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
+      RecomdPrompt:
+        - Prompt: A group of penguins swimming with the waves
+          NegPrompt: Bad quality
+          LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg

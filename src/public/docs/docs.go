@@ -119,7 +119,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/resources.Infer"
+                                            "$ref": "#/definitions/resources.Inference"
                                         }
                                     }
                                 }
@@ -246,35 +246,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "resources.Infer": {
-            "type": "object",
-            "properties": {
-                "deadline": {
-                    "description": "Deadline for completing the task",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "max_retry": {
-                    "type": "integer"
-                },
-                "model": {
-                    "type": "string"
-                },
-                "retention": {
-                    "description": "Retention in hours for how long to store the task info",
-                    "type": "string"
-                },
-                "status": {
-                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "resources.Inference": {
             "type": "object",
             "properties": {
@@ -315,13 +286,33 @@ const docTemplate = `{
         "resources.Model": {
             "type": "object",
             "properties": {
-                "category": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
+                "logo_url": {
+                    "type": "string"
+                },
                 "name": {
+                    "type": "string"
+                },
+                "recomd_prompts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/resources.RecomdPrompt"
+                    }
+                }
+            }
+        },
+        "resources.RecomdPrompt": {
+            "type": "object",
+            "properties": {
+                "logo_url": {
+                    "type": "string"
+                },
+                "neg_prompt": {
+                    "type": "string"
+                },
+                "prompt": {
                     "type": "string"
                 }
             }
