@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Voice Changer API Public",
+        "title": "GoghAI API Public",
         "contact": {},
         "version": "1.0.0"
     },
@@ -277,6 +277,12 @@
         "resources.Model": {
             "type": "object",
             "properties": {
+                "guidance_scale": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -286,24 +292,36 @@
                 "name": {
                     "type": "string"
                 },
+                "num_frames": {
+                    "type": "integer"
+                },
+                "num_inference_steps": {
+                    "type": "integer"
+                },
                 "recomd_prompts": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/resources.RecomdPrompt"
                     }
+                },
+                "width": {
+                    "type": "integer"
                 }
             }
         },
         "resources.RecomdPrompt": {
             "type": "object",
             "properties": {
-                "logo_url": {
+                "asset_url": {
                     "type": "string"
                 },
                 "neg_prompt": {
                     "type": "string"
                 },
                 "prompt": {
+                    "type": "string"
+                },
+                "thumbnail_url": {
                     "type": "string"
                 }
             }

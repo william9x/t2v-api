@@ -27,24 +27,36 @@ definitions:
     type: object
   resources.Model:
     properties:
+      guidance_scale:
+        type: number
+      height:
+        type: integer
       id:
         type: string
       logo_url:
         type: string
       name:
         type: string
+      num_frames:
+        type: integer
+      num_inference_steps:
+        type: integer
       recomd_prompts:
         items:
           $ref: '#/definitions/resources.RecomdPrompt'
         type: array
+      width:
+        type: integer
     type: object
   resources.RecomdPrompt:
     properties:
-      logo_url:
+      asset_url:
         type: string
       neg_prompt:
         type: string
       prompt:
+        type: string
+      thumbnail_url:
         type: string
     type: object
   response.Meta:
@@ -62,7 +74,7 @@ definitions:
     type: object
 info:
   contact: {}
-  title: Voice Changer API Public
+  title: GoghAI API Public
   version: 1.0.0
 paths:
   /api/v1/infer:

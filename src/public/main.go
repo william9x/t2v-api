@@ -5,7 +5,7 @@ import (
 	"go.uber.org/fx"
 )
 
-// @title Voice Changer API Public
+// @title GoghAI API Public
 // @version 1.0.0
 func main() {
 	fx.New(bootstrap.All()).Run()

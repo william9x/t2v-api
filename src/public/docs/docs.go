@@ -286,6 +286,12 @@ const docTemplate = `{
         "resources.Model": {
             "type": "object",
             "properties": {
+                "guidance_scale": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -295,24 +301,36 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "num_frames": {
+                    "type": "integer"
+                },
+                "num_inference_steps": {
+                    "type": "integer"
+                },
                 "recomd_prompts": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/resources.RecomdPrompt"
                     }
+                },
+                "width": {
+                    "type": "integer"
                 }
             }
         },
         "resources.RecomdPrompt": {
             "type": "object",
             "properties": {
-                "logo_url": {
+                "asset_url": {
                     "type": "string"
                 },
                 "neg_prompt": {
                     "type": "string"
                 },
                 "prompt": {
+                    "type": "string"
+                },
+                "thumbnail_url": {
                     "type": "string"
                 }
             }
@@ -346,7 +364,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Voice Changer API Public",
+	Title:            "GoghAI API Public",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

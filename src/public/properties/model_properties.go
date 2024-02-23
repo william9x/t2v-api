@@ -16,16 +16,22 @@ type ModelProperties struct {
 }
 
 type ModelData struct {
-	ID           string
-	Name         string
-	LogoURL      string
-	RecomdPrompt []RecomdPrompt
+	ID                string
+	Name              string
+	LogoURL           string
+	NumInferenceSteps int
+	NumFrames         int
+	Width             int
+	Height            int
+	GuidanceScale     float32
+	RecomdPrompt      []RecomdPrompt
 }
 
 type RecomdPrompt struct {
-	Prompt    string
-	NegPrompt string
-	LogoURL   string
+	Prompt       string
+	NegPrompt    string
+	ThumbnailURL string
+	AssetURL     string
 }
 
 func (t *ModelProperties) Prefix() string {
