@@ -97,10 +97,10 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		return
 	}
 
-	if _, exist := c.modelProps.DataMap[req.Model]; !exist {
-		response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
-		return
-	}
+	//if _, exist := c.modelProps.DataMap[req.Model]; !exist {
+	//	response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
+	//	return
+	//}
 
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {

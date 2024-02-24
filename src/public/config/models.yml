@@ -1,9 +1,10 @@
 app:
   models.data:
-    - ID: animate_lcm_pixar
-      Name: Pixar
+    - ID: animate_lcm_cartoon
+      Path: Yntec/ResidentCNZCartoon3D
+      Name: Cartoon3D
       LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
+      NumInferenceSteps: 6
       NumFrames: 16
       Width: 512
       Height: 512
@@ -13,68 +14,45 @@ app:
           NegPrompt: Bad quality
           ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
           AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-    - ID: animate_lcm_anime
-      Name: Anime
+    - ID: animate_lcm_photorealistic
+      Path: emilianJR/epiCRealism
+      Name: Photorealistic
       LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
+      NumInferenceSteps: 8
       NumFrames: 16
       Width: 512
-      Height: 512
-      GuidanceScale: 1.5
+      Height: 768
+      GuidanceScale: 5
       RecomdPrompt:
-        - Prompt: A group of penguins swimming with the waves
-          NegPrompt: Bad quality
+        - Prompt: Photo of a ginger woman, in space, futuristic space suit, cute face, sci-fi, dystopian, detailed eyes, blue eyes
+          NegPrompt: cartoon, painting, illustration, (worst quality, low quality, normal quality:2), (watermark), immature, child
           ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
           AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
     - ID: animate_lcm_realistic
+      Path: SG161222/Realistic_Vision_V6.0_B1_noVAE
       Name: Realistic
       LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
+      NumInferenceSteps: 8
       NumFrames: 16
-      Width: 512
-      Height: 512
-      GuidanceScale: 1.5
+      Width: 896
+      Height: 896
+      GuidanceScale: 5
       RecomdPrompt:
-        - Prompt: A group of penguins swimming with the waves
-          NegPrompt: Bad quality
+        - Prompt: Photo of a ginger woman, in space, futuristic space suit, cute face, sci-fi, dystopian, detailed eyes, blue eyes
+          NegPrompt: (deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime), text, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck
           ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
           AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-    - ID: animate_lcm_pixel
-      Name: Pixel art
+    - ID: animate_lcm_artstyle
+      Path: stablediffusionapi/lyrielv16
+      Name: Art Style
       LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
+      NumInferenceSteps: 8
       NumFrames: 16
       Width: 512
-      Height: 512
-      GuidanceScale: 1.5
+      Height: 768
+      GuidanceScale: 5
       RecomdPrompt:
-        - Prompt: A group of penguins swimming with the waves
-          NegPrompt: Bad quality
-          ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-          AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-    - ID: animate_lcm_sticker
-      Name: Sticker
-      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
-      NumFrames: 16
-      Width: 512
-      Height: 512
-      GuidanceScale: 1.5
-      RecomdPrompt:
-        - Prompt: A group of penguins swimming with the waves
-          NegPrompt: Bad quality
-          ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-          AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-    - ID: animate_lcm_retro
-      Name: Retro
-      LogoURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
-      NumInferenceSteps: 4
-      NumFrames: 16
-      Width: 512
-      Height: 512
-      GuidanceScale: 1.5
-      RecomdPrompt:
-        - Prompt: A group of penguins swimming with the waves
-          NegPrompt: Bad quality
+        - Prompt: A tribal elder with a face tattoo, (colorful scarf hat wrap,yang08k, photography, beautiful,  black background, colorful, realistic, masterpieces, top quality, best quality, official art, beautiful and aesthetic
+          NegPrompt: EasyNegativeV2, ng_deepnegative_v1_75t, (low_quality:1.4), (worst_quality:1.4), (badhandv4:1.1),collage, artist_name, signature, artist_logo, watermark
           ThumbnailURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg
           AssetURL: https://dev.storage.bralyvn.com/text-to-video/assets/sample.jpeg

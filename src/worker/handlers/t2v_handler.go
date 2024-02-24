@@ -55,6 +55,7 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		Height:            vcPayload.Height,
 		GuidanceScale:     vcPayload.GuidanceScale,
 		OutputFilePath:    fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName),
+		ModelPath:         vcPayload.Model,
 	}
 	if err := r.inferencePort.Infer(ctx, cmd); err != nil {
 		return err
