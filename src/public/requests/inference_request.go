@@ -7,9 +7,14 @@ type CreateInferenceRequest struct {
 
 	Prompt            string  `form:"prompt,omitempty" binding:"notblank"`
 	NegativePrompt    string  `form:"negative_prompt,omitempty"`
-	NumInferenceSteps int     `form:"num_inference_steps,omitempty,default=4" binding:"max=8,min=1"`
-	NumFrames         int     `form:"num_frames,omitempty,default=16" binding:"max=20,min=16"`
+	NumInferenceSteps int     `form:"num_inference_steps,omitempty,default=4" binding:"max=200,min=1"`
+	NumFrames         int     `form:"num_frames,omitempty,default=16" binding:"max=32,min=16"`
 	Width             int     `form:"width,omitempty,default=512"`
 	Height            int     `form:"height,omitempty,default=512"`
 	GuidanceScale     float32 `form:"guidance_scale,omitempty,default=1.5" binding:"max=100,min=0"`
+}
+
+// FilterInferenceRequest ...
+type FilterInferenceRequest struct {
+	IDs []string `json:"ids,omitempty" binding:"required"`
 }

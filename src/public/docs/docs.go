@@ -30,11 +30,13 @@ const docTemplate = `{
                 "operationId": "filter-inference",
                 "parameters": [
                     {
-                        "type": "string",
                         "description": "Task IDs",
-                        "name": "ids",
-                        "in": "query",
-                        "required": true
+                        "name": "filter",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.FilterInferenceRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -123,7 +125,7 @@ const docTemplate = `{
                         "in": "formData"
                     },
                     {
-                        "maximum": 8,
+                        "maximum": 200,
                         "minimum": 1,
                         "type": "integer",
                         "default": 4,
@@ -132,7 +134,7 @@ const docTemplate = `{
                         "in": "formData"
                     },
                     {
-                        "maximum": 20,
+                        "maximum": 32,
                         "minimum": 16,
                         "type": "integer",
                         "default": 16,
@@ -303,6 +305,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "requests.FilterInferenceRequest": {
+            "type": "object",
+            "required": [
+                "ids"
+            ],
+            "properties": {
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "resources.Inference": {
             "type": "object",
             "properties": {

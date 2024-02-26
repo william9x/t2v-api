@@ -1,4 +1,13 @@
 definitions:
+  requests.FilterInferenceRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        type: array
+    required:
+    - ids
+    type: object
   resources.Inference:
     properties:
       deadline:
@@ -84,10 +93,11 @@ paths:
       operationId: filter-inference
       parameters:
       - description: Task IDs
-        in: query
-        name: ids
+        in: body
+        name: filter
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/requests.FilterInferenceRequest'
       produces:
       - application/json
       responses:
@@ -149,14 +159,14 @@ paths:
         description: More steps usually lead to a higher quality image at the expense
           of slower inference
         in: formData
-        maximum: 8
+        maximum: 200
         minimum: 1
         name: num_inference_steps
         type: integer
       - default: 16
         description: 'The number of video frames to generate. Default FPS: 8'
         in: formData
-        maximum: 20
+        maximum: 32
         minimum: 16
         name: num_frames
         type: integer

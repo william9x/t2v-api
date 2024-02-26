@@ -10,7 +10,6 @@ import (
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
 	"github.com/golibs-starter/golib/web/response"
-	"strings"
 )
 
 type InferenceController struct {
@@ -77,20 +76,20 @@ func (c *InferenceController) GetInference(ctx *gin.Context) {
 //	@Tags			InferenceController
 //	@Accept			json
 //	@Produce		json
-//	@Param			ids		query    	string     true        "Task IDs"
+//	@Param			filter	body    	requests.FilterInferenceRequest     true        "Task IDs"
 //	@Success		200		{object}	response.Response{data=[]resources.Inference}
 //	@Success		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [get]
 func (c *InferenceController) FilterInference(ctx *gin.Context) {
 
-	ids, ok := ctx.GetQuery("ids")
-	if ok {
-		response.WriteError(ctx.Writer, exception.New(400, "Missing ids"))
+	var req requests.FilterInferenceRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		response.WriteError(ctx.Writer, exception.New(40000, err.Error()))
 		return
 	}
 
-	infoList, err := c.inferenceService.FilterInference(ctx, strings.Split(ids, ","))
+	infoList, err := c.inferenceService.FilterInference(ctx, req.IDs)
 	if err != nil {
 		log.Errorc(ctx, "new task info resource error: %v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
@@ -119,8 +118,8 @@ func (c *InferenceController) FilterInference(ctx *gin.Context) {
 //	@Param			type					formData		string			false	"Infer type" Enums(t2v,i2v,v2v,upscale) default(t2v)
 //	@Param			prompt					formData		string			true	"The prompt or prompts to guide image generation." minlength(1) maxlength(1000)
 //	@Param			negative_prompt			formData		string			false	"The prompt or prompts to guide what to not include in image generation."
-//	@Param			num_inference_steps		formData		int				false	"More steps usually lead to a higher quality image at the expense of slower inference" default(4) minimum(1) maximum(8)
-//	@Param			num_frames				formData		int				false	"The number of video frames to generate. Default FPS: 8" default(16) minimum(16) maximum(20)
+//	@Param			num_inference_steps		formData		int				false	"More steps usually lead to a higher quality image at the expense of slower inference" default(4) minimum(1) maximum(200)
+//	@Param			num_frames				formData		int				false	"The number of video frames to generate. Default FPS: 8" default(16) minimum(16) maximum(32)
 //	@Param			width					formData		int				false	"The width in pixels of the generated image/video." default(512)
 //	@Param			height					formData		int				false	"The height in pixels of the generated image/video." default(512)
 //	@Param			guidance_scale			formData		float32			false	"A higher guidance scale value encourages the model to generate images closely linked to the `prompt` at the expense of lower image quality." default(1.5) minimum(0) maximum(100)
