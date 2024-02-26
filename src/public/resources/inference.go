@@ -33,6 +33,18 @@ type Inference struct {
 	TargetFileURL string `json:"target_file_url,omitempty"`
 }
 
+func NewFromTaskInfoList(infoList []*asynq.TaskInfo) ([]*Inference, error) {
+	inferences := make([]*Inference, 0, len(infoList))
+	for _, item := range infoList {
+		inference, err := NewFromTaskInfo(item)
+		if err != nil {
+			return nil, err
+		}
+		inferences = append(inferences, inference)
+	}
+	return inferences, nil
+}
+
 func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 	var payload entities.InferPayload
 	if err := msgpack.Unmarshal(info.Payload, &payload); err != nil {

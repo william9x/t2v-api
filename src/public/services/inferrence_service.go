@@ -33,6 +33,21 @@ func (r *InferenceService) GetInference(ctx context.Context, queueId, id string)
 	return r.taskQueuePort.GetTask(ctx, queueId, id)
 }
 
+// FilterInference ...
+func (r *InferenceService) FilterInference(ctx context.Context, ids []string) ([]*asynq.TaskInfo, error) {
+	tasks := make([]*asynq.TaskInfo, 0, len(ids))
+	for _, id := range ids {
+		queueId, inferId := utils.ExtractInferenceKey(id)
+		task, err := r.taskQueuePort.GetTask(ctx, queueId, inferId)
+		if err != nil {
+			return nil, err
+		}
+		tasks = append(tasks, task)
+	}
+
+	return tasks, nil
+}
+
 // CreateInference ...
 func (r *InferenceService) CreateInference(
 	ctx context.Context,

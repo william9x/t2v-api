@@ -10,6 +10,7 @@ import (
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
 	"github.com/golibs-starter/golib/web/response"
+	"strings"
 )
 
 type InferenceController struct {
@@ -59,6 +60,44 @@ func (c *InferenceController) GetInference(ctx *gin.Context) {
 	}
 
 	resp, err := resources.NewFromTaskInfo(inferInfo)
+	if err != nil {
+		log.Errorc(ctx, "new task info resource error: %v", err)
+		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
+		return
+	}
+
+	response.Write(ctx.Writer, response.Ok(resp))
+}
+
+// FilterInference
+//
+//	@ID				filter-inference
+//	@Summary 		Filter inferences
+//	@Description
+//	@Tags			InferenceController
+//	@Accept			json
+//	@Produce		json
+//	@Param			ids		query    	string     true        "Task IDs"
+//	@Success		200		{object}	response.Response{data=[]resources.Inference}
+//	@Success		400		{object}	response.Response
+//	@Failure		500		{object}	response.Response
+//	@Router			/api/v1/infer [get]
+func (c *InferenceController) FilterInference(ctx *gin.Context) {
+
+	ids, ok := ctx.GetQuery("ids")
+	if ok {
+		response.WriteError(ctx.Writer, exception.New(400, "Missing ids"))
+		return
+	}
+
+	infoList, err := c.inferenceService.FilterInference(ctx, strings.Split(ids, ","))
+	if err != nil {
+		log.Errorc(ctx, "new task info resource error: %v", err)
+		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
+		return
+	}
+
+	resp, err := resources.NewFromTaskInfoList(infoList)
 	if err != nil {
 		log.Errorc(ctx, "new task info resource error: %v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
