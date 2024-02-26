@@ -10,5 +10,5 @@ const (
 )
 
 const (
-	TaskIDSeparator = ":"
+	TaskIDSeparator = "|"
 )

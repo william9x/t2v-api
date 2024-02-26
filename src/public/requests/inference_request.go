@@ -2,7 +2,7 @@ package requests
 
 // CreateInferenceRequest ...
 type CreateInferenceRequest struct {
-	Model string `form:"model,omitempty,default=stablediffusionapi/samaritan-3d-cartoon" binding:"notblank"`
+	Model string `form:"model,omitempty" binding:"notblank"`
 	Type  string `form:"type,omitempty,default=t2v"`
 
 	Prompt            string  `form:"prompt,omitempty" binding:"notblank"`

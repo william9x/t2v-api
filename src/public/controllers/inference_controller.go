@@ -115,15 +115,15 @@ func (c *InferenceController) FilterInference(ctx *gin.Context) {
 //	@Tags			InferenceController
 //	@Accept			multipart/form-data
 //	@Produce		json
-//	@Param			model					formData		string			true	"AI model ID" default(animate_lcm)
+//	@Param			model					formData		string			true	"AI model ID" default(stablediffusionapi/samaritan-3d-cartoon)
 //	@Param			type					formData		string			false	"Infer type" Enums(t2v,i2v,v2v,upscale) default(t2v)
 //	@Param			prompt					formData		string			true	"The prompt or prompts to guide image generation." minlength(1) maxlength(1000)
 //	@Param			negative_prompt			formData		string			false	"The prompt or prompts to guide what to not include in image generation."
-//	@Param			num_inference_steps		formData		int				false	"More steps usually lead to a higher quality image at the expense of slower inference" default(25) minimum(1) maximum(25)
-//	@Param			num_frames				formData		int				false	"The number of video frames to generate. Default FPS: 8" default(16) minimum(16) maximum(16)
+//	@Param			num_inference_steps		formData		int				false	"More steps usually lead to a higher quality image at the expense of slower inference" default(4) minimum(1) maximum(8)
+//	@Param			num_frames				formData		int				false	"The number of video frames to generate. Default FPS: 8" default(16) minimum(16) maximum(20)
 //	@Param			width					formData		int				false	"The width in pixels of the generated image/video." default(512)
 //	@Param			height					formData		int				false	"The height in pixels of the generated image/video." default(512)
-//	@Param			guidance_scale			formData		float32			false	"A higher guidance scale value encourages the model to generate images closely linked to the `prompt` at the expense of lower image quality." default(2) minimum(0) maximum(100)
+//	@Param			guidance_scale			formData		float32			false	"A higher guidance scale value encourages the model to generate images closely linked to the `prompt` at the expense of lower image quality." default(1.5) minimum(0) maximum(100)
 //	@Success		201		{object}	response.Response{data=resources.Inference}
 //	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response

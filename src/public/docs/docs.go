@@ -88,7 +88,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "animate_lcm",
+                        "default": "stablediffusionapi/samaritan-3d-cartoon",
                         "description": "AI model ID",
                         "name": "model",
                         "in": "formData",
@@ -123,16 +123,16 @@ const docTemplate = `{
                         "in": "formData"
                     },
                     {
-                        "maximum": 25,
+                        "maximum": 8,
                         "minimum": 1,
                         "type": "integer",
-                        "default": 25,
+                        "default": 4,
                         "description": "More steps usually lead to a higher quality image at the expense of slower inference",
                         "name": "num_inference_steps",
                         "in": "formData"
                     },
                     {
-                        "maximum": 16,
+                        "maximum": 20,
                         "minimum": 16,
                         "type": "integer",
                         "default": 16,
@@ -158,7 +158,7 @@ const docTemplate = `{
                         "maximum": 100,
                         "minimum": 0,
                         "type": "number",
-                        "default": 2,
+                        "default": 1.5,
                         "description": "A higher guidance scale value encourages the model to generate images closely linked to the ` + "`" + `prompt` + "`" + ` at the expense of lower image quality.",
                         "name": "guidance_scale",
                         "in": "formData"

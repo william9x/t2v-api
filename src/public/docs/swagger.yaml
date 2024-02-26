@@ -118,7 +118,7 @@ paths:
       - multipart/form-data
       operationId: create-inference
       parameters:
-      - default: animate_lcm
+      - default: stablediffusionapi/samaritan-3d-cartoon
         description: AI model ID
         in: formData
         name: model
@@ -145,18 +145,18 @@ paths:
         in: formData
         name: negative_prompt
         type: string
-      - default: 25
+      - default: 4
         description: More steps usually lead to a higher quality image at the expense
           of slower inference
         in: formData
-        maximum: 25
+        maximum: 8
         minimum: 1
         name: num_inference_steps
         type: integer
       - default: 16
         description: 'The number of video frames to generate. Default FPS: 8'
         in: formData
-        maximum: 16
+        maximum: 20
         minimum: 16
         name: num_frames
         type: integer
@@ -170,7 +170,7 @@ paths:
         in: formData
         name: height
         type: integer
-      - default: 2
+      - default: 1.5
         description: A higher guidance scale value encourages the model to generate
           images closely linked to the `prompt` at the expense of lower image quality.
         in: formData
