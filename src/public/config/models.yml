@@ -1,20 +1,14 @@
 app:
   models.data:
     - ID: amnd_pixar
-      Path: stablediffusionapi/disney-pixar-cartoon
       TriggerWords:
     - ID: amnd_realistic
-      Path: stablediffusionapi/realistic-vision-v51
       TriggerWords: RAW photo, 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3
     - ID: amnd_pixel
-      Path: stablediffusionapi/stylizedpixel
       TriggerWords: pixel art, pixel art style
     - ID: amnd_anime
-      Path: stablediffusionapi/nuke-colormax-anime
       TriggerWords: high res
     - ID: amnd_vangogh
-      Path: stablediffusionapi/van-gogh-diffusion
       TriggerWords: lvngvncnt
     - ID: amnd_general
-      Path: runwayml/stable-diffusion-v1-5
       TriggerWords:

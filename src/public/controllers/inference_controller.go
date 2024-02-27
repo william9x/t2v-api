@@ -141,7 +141,7 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
 		return
 	}
-	req.Model = modelProps.Path
+
 	if len(modelProps.TriggerWords) > 1 {
 		req.Prompt = fmt.Sprintf("%s %s", req.Prompt, modelProps.TriggerWords)
 	}

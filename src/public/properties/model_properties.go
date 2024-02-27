@@ -17,7 +17,6 @@ type ModelProperties struct {
 
 type ModelData struct {
 	ID           string `json:"id,omitempty"`
-	Path         string `json:"path,omitempty"`
 	TriggerWords string `json:"trigger_words,omitempty"`
 }
 
