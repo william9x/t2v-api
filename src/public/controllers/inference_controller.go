@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/Braly-Ltd/t2v-api-core/utils"
 	"github.com/Braly-Ltd/t2v-api-public/properties"
 	"github.com/Braly-Ltd/t2v-api-public/requests"
@@ -114,7 +115,7 @@ func (c *InferenceController) FilterInference(ctx *gin.Context) {
 //	@Tags			InferenceController
 //	@Accept			multipart/form-data
 //	@Produce		json
-//	@Param			model					formData		string			true	"AI model ID" default(stablediffusionapi/samaritan-3d-cartoon)
+//	@Param			model					formData		string			true	"AI model ID" default(amnd_general)
 //	@Param			type					formData		string			false	"Infer type" Enums(t2v,i2v,v2v,upscale) default(t2v)
 //	@Param			prompt					formData		string			true	"The prompt or prompts to guide image generation." minlength(1) maxlength(1000)
 //	@Param			negative_prompt			formData		string			false	"The prompt or prompts to guide what to not include in image generation."
@@ -135,10 +136,15 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		return
 	}
 
-	//if _, exist := c.promptProps.DataMap[req.Model]; !exist {
-	//	response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
-	//	return
-	//}
+	modelProps, exist := c.modelProps.DataMap[req.Model]
+	if !exist {
+		response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
+		return
+	}
+	req.Model = modelProps.Path
+	if len(modelProps.TriggerWords) > 1 {
+		req.Prompt = fmt.Sprintf("%s %s", req.Prompt, modelProps.TriggerWords)
+	}
 
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {

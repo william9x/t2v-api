@@ -16,22 +16,9 @@ type ModelProperties struct {
 }
 
 type ModelData struct {
-	ID                string
-	Name              string
-	LogoURL           string
-	NumInferenceSteps int
-	NumFrames         int
-	Width             int
-	Height            int
-	GuidanceScale     float32
-	RecomdPrompt      []RecomdPrompt
-}
-
-type RecomdPrompt struct {
-	Prompt       string
-	NegPrompt    string
-	ThumbnailURL string
-	AssetURL     string
+	ID           string `json:"id,omitempty"`
+	Path         string `json:"path,omitempty"`
+	TriggerWords string `json:"trigger_words,omitempty"`
 }
 
 func (t *ModelProperties) Prefix() string {

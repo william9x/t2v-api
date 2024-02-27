@@ -36,26 +36,12 @@ definitions:
     type: object
   resources.Model:
     properties:
-      guidance_scale:
-        type: number
-      height:
-        type: integer
       id:
         type: string
-      logo_url:
+      path:
         type: string
-      name:
+      trigger_words:
         type: string
-      num_frames:
-        type: integer
-      num_inference_steps:
-        type: integer
-      recomd_prompts:
-        items:
-          $ref: '#/definitions/resources.RecomdPrompt'
-        type: array
-      width:
-        type: integer
     type: object
   resources.Prompt:
     properties:
@@ -75,17 +61,6 @@ definitions:
         type: string
       width:
         type: integer
-    type: object
-  resources.RecomdPrompt:
-    properties:
-      asset_url:
-        type: string
-      neg_prompt:
-        type: string
-      prompt:
-        type: string
-      thumbnail_url:
-        type: string
     type: object
   response.Meta:
     properties:
@@ -147,7 +122,7 @@ paths:
       - multipart/form-data
       operationId: create-inference
       parameters:
-      - default: stablediffusionapi/samaritan-3d-cartoon
+      - default: amnd_general
         description: AI model ID
         in: formData
         name: model

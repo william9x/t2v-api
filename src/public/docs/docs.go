@@ -90,7 +90,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "stablediffusionapi/samaritan-3d-cartoon",
+                        "default": "amnd_general",
                         "description": "AI model ID",
                         "name": "model",
                         "in": "formData",
@@ -400,35 +400,14 @@ const docTemplate = `{
         "resources.Model": {
             "type": "object",
             "properties": {
-                "guidance_scale": {
-                    "type": "number"
-                },
-                "height": {
-                    "type": "integer"
-                },
                 "id": {
                     "type": "string"
                 },
-                "logo_url": {
+                "path": {
                     "type": "string"
                 },
-                "name": {
+                "trigger_words": {
                     "type": "string"
-                },
-                "num_frames": {
-                    "type": "integer"
-                },
-                "num_inference_steps": {
-                    "type": "integer"
-                },
-                "recomd_prompts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/resources.RecomdPrompt"
-                    }
-                },
-                "width": {
-                    "type": "integer"
                 }
             }
         },
@@ -458,23 +437,6 @@ const docTemplate = `{
                 },
                 "width": {
                     "type": "integer"
-                }
-            }
-        },
-        "resources.RecomdPrompt": {
-            "type": "object",
-            "properties": {
-                "asset_url": {
-                    "type": "string"
-                },
-                "neg_prompt": {
-                    "type": "string"
-                },
-                "prompt": {
-                    "type": "string"
-                },
-                "thumbnail_url": {
-                    "type": "string"
                 }
             }
         },
