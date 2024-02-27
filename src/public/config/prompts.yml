@@ -1,0 +1,106 @@
+app:
+  prompts.data:
+    - Prompt: Donald Trump sings karaoke
+      NegPrompt:
+      ModelID: amnd_pixar
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Wonder Woman rides a scooter through Central Park
+      NegPrompt:
+      ModelID: amnd_pixar
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: John Wick hugging his dog
+      NegPrompt: (deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime), text, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, UnrealisticDream
+      ModelID: amnd_realistic
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Darth Vader goes shopping for groceries at a farmers market
+      NegPrompt: (deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime), text, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, UnrealisticDream
+      ModelID: amnd_realistic
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Scooby-Doo thinks about food
+      NegPrompt: (deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime), text, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, UnrealisticDream
+      ModelID: amnd_realistic
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: A group of penguins swimming with the waves
+      NegPrompt: deformed (extra_limbs:1.3) (mutated:1.2), (Worst Quality, Low Quality:1.4), Poorly Made Bad 3D, Lousy Bad Realistic straps sportwear paintings, sketches, fingers, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, (outdoor:1.6), backlight,(ugly:1.331), (duplicate:1.331), (morbid:1.21), (mutilated:1.21), (tranny:1.331), mutated hands, (poorly drawn hands:1.5), blurry, (bad anatomy:1.21), (bad proportions:1.331), extra limbs, (disfigured:1.331), (more than 2 nipples:1.331), (missing arms:1.331), (extra legs:1.331), (fused fingers:1.61051), (too many fingers:1.61051), (unclear eyes:1.331), lowers, bad hands, missing fingers, extra digit, (futa:1.1),bad hands, missing fingers, bad-hands-5
+      ModelID: amnd_pixel
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Anime style countryside scene with green fields, sky, sun, gentle flowers, with massive clouds, ephemeral clouds floating in a pastel sky, the atmosphere filled with a sense of wonder, ultra high res, high contrast, 8k resolution, anime style
+      NegPrompt: bridge, negative_hand,easynegative,(low quality, worst quality:1.4),(bad_prompt:0.8),(monochrome:1.1),(greyscale),bad eyes,uneven eyes,(blur, blurry:1.4),lowres,bad anatomy,bad hands,bad face,text, error,cropped,worst quality,low quality,normal quality,multiple views, (worst quality, low quality:1.1), watermark, text, username, monochrome,
+      ModelID: amnd_anime
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: A very high resolution image from What Dreams May Come movie, Medium Shot
+      NegPrompt: split screen, disfigured, wrong anatomy, undefined eyes, mutated hands, mutated fingers, (worst quality, low quality, normal quality:1.4)
+      ModelID: amnd_anime
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: A beautiful photography of a Gundam, trending on Artstation
+      NegPrompt: split screen, disfigured, wrong anatomy, undefined eyes, mutated hands, mutated fingers, (worst quality, low quality, normal quality:1.4)
+      ModelID: amnd_anime
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: lvngvncnt , tables and chairs and people in a coffee shop on a city street,rain,details
+      NegPrompt: Yellow face, negative_hand,easynegative,(low quality, worst quality:1.4),(bad_prompt:0.8),(monochrome:1.1),(greyscale),bad eyes,uneven eyes,(blur, blurry:1.4),lowres,bad anatomy,bad hands,bad face,text, error,cropped,worst quality,low quality,normal quality,multiple views, (worst quality, low quality:1.1), watermark, text, username, monochrome,
+      ModelID: amnd_vangogh
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: A very cute cat, detailed, lvngvncnt style
+      NegPrompt: Yellow face, negative_hand,easynegative,(low quality, worst quality:1.4),(bad_prompt:0.8),(monochrome:1.1),(greyscale),bad eyes,uneven eyes,(blur, blurry:1.4),lowres,bad anatomy,bad hands,bad face,text, error,cropped,worst quality,low quality,normal quality,multiple views, (worst quality, low quality:1.1), watermark, text, username, monochrome,
+      ModelID: amnd_vangogh
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Mario from Super Mario jumping in a street
+      NegPrompt: deformed (extra_limbs:1.3) (mutated:1.2), (Worst Quality, Low Quality:1.4), Poorly Made Bad 3D, Lousy Bad Realistic straps sportwear paintings, sketches, fingers, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, (outdoor:1.6), backlight,(ugly:1.331), (duplicate:1.331), (morbid:1.21), (mutilated:1.21), (tranny:1.331), mutated hands, (poorly drawn hands:1.5), blurry, (bad anatomy:1.21), (bad proportions:1.331), extra limbs, (disfigured:1.331), (more than 2 nipples:1.331), (missing arms:1.331), (extra legs:1.331), (fused fingers:1.61051), (too many fingers:1.61051), (unclear eyes:1.331), lowers, bad hands, missing fingers, extra digit, (futa:1.1),bad hands, missing fingers, bad-hands-5
+      ModelID: amnd_pixel
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5
+    - Prompt: Dinosaur combats with a chicken
+      NegPrompt:
+      ModelID: amnd_realistic
+      NumInferenceSteps: 4
+      NumFrames: 16
+      Width: 512
+      Height: 512
+      GuidanceScale: 1.5

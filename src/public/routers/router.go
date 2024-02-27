@@ -21,6 +21,7 @@ type RegisterRoutersIn struct {
 	Actuator            *actuator.Endpoint
 	InferenceController *controllers.InferenceController
 	ModelController     *controllers.ModelController
+	PromptController    *controllers.PromptController
 }
 
 func RegisterGinRouters(p RegisterRoutersIn) {
@@ -42,4 +43,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	apiV1Group.GET("/infer/:id", p.InferenceController.GetInference)
 	apiV1Group.GET("/infer", p.InferenceController.FilterInference)
 	apiV1Group.POST("/infer", p.InferenceController.CreateInference)
+
+	// Prompt APIs
+	apiV1Group.GET("/prompts/suggest", p.PromptController.GetRandomPrompt)
 }

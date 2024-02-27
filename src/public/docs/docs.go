@@ -302,6 +302,47 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/prompts/suggest": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PromptController"
+                ],
+                "summary": "Get random prompts",
+                "operationId": "get-random-prompt",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/resources.Prompt"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -385,6 +426,35 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/resources.RecomdPrompt"
                     }
+                },
+                "width": {
+                    "type": "integer"
+                }
+            }
+        },
+        "resources.Prompt": {
+            "type": "object",
+            "properties": {
+                "guidance_scale": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "model_id": {
+                    "type": "string"
+                },
+                "neg_prompt": {
+                    "type": "string"
+                },
+                "num_frames": {
+                    "type": "integer"
+                },
+                "num_inference_steps": {
+                    "type": "integer"
+                },
+                "prompt": {
+                    "type": "string"
                 },
                 "width": {
                     "type": "integer"

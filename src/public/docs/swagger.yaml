@@ -57,6 +57,25 @@ definitions:
       width:
         type: integer
     type: object
+  resources.Prompt:
+    properties:
+      guidance_scale:
+        type: number
+      height:
+        type: integer
+      model_id:
+        type: string
+      neg_prompt:
+        type: string
+      num_frames:
+        type: integer
+      num_inference_steps:
+        type: integer
+      prompt:
+        type: string
+      width:
+        type: integer
+    type: object
   resources.RecomdPrompt:
     properties:
       asset_url:
@@ -273,4 +292,28 @@ paths:
       summary: Get list supported models
       tags:
       - ModelController
+  /api/v1/prompts/suggest:
+    get:
+      consumes:
+      - application/json
+      operationId: get-random-prompt
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.Prompt'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get random prompts
+      tags:
+      - PromptController
 swagger: "2.0"

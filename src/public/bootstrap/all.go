@@ -33,6 +33,7 @@ func All() fx.Option {
 		golib.ProvideProps(properties.NewSwaggerProperties),
 		golib.ProvideProps(properties.NewTLSProperties),
 		golib.ProvideProps(properties.NewModelProperties),
+		golib.ProvideProps(properties.NewPromptProperties),
 		golib.ProvideProps(properties.NewInferenceProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
@@ -60,6 +61,7 @@ func All() fx.Option {
 		// when register router was invoked
 		fx.Provide(controllers.NewInferenceController),
 		fx.Provide(controllers.NewModelController),
+		fx.Provide(controllers.NewPromptController),
 
 		// Provide gin http server auto config,
 		// actuator endpoints and application routers

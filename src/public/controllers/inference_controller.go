@@ -135,7 +135,7 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		return
 	}
 
-	//if _, exist := c.modelProps.DataMap[req.Model]; !exist {
+	//if _, exist := c.promptProps.DataMap[req.Model]; !exist {
 	//	response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
 	//	return
 	//}
