@@ -9,5 +9,5 @@ type InferenceCommand struct {
 	Height            int     `json:"height"`
 	GuidanceScale     float32 `json:"guidance_scale"`
 	OutputFilePath    string  `json:"output_file_path"`
-	ModelPath         string  `json:"model_path"`
+	ModelID           string  `json:"model_id"`
 }
