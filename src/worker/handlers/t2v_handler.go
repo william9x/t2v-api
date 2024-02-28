@@ -60,7 +60,7 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	if err := r.inferencePort.Infer(ctx, cmd); err != nil {
 		return err
 	}
-	log.Infoc(ctx, "task %s inference completed, start uploading", task.Type())
+	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
 
 	if err := r.objectStoragePort.UploadFilePath(ctx, cmd.OutputFilePath, vcPayload.TargetFileName); err != nil {
 		log.Errorf("upload file error: %v", err)
