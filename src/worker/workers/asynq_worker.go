@@ -27,6 +27,7 @@ func NewAsynqWorker(
 		asynq.Config{
 			Concurrency: workerProps.Concurrency,
 			Queues:      queueProps.Queues,
+			Logger:      log.GetGlobal(),
 		},
 	)
 
