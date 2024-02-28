@@ -10,15 +10,19 @@ definitions:
     type: object
   resources.Inference:
     properties:
+      completed_at:
+        type: string
       deadline:
         description: Deadline for completing the task
+        type: string
+      enqueued_at:
         type: string
       id:
         type: string
       last_err:
         type: string
       last_failed_at:
-        type: integer
+        type: string
       max_retry:
         type: integer
       model:
@@ -37,8 +41,6 @@ definitions:
   resources.Model:
     properties:
       id:
-        type: string
-      path:
         type: string
       trigger_words:
         type: string

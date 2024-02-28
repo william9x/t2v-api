@@ -29,8 +29,10 @@ type Inference struct {
 	Deadline      string `json:"deadline,omitempty"` // Deadline for completing the task
 	Retried       int    `json:"retried"`
 	LastErr       string `json:"last_err,omitempty"`
-	LastFailedAt  int64  `json:"last_failed_at,omitempty"`
+	LastFailedAt  string `json:"last_failed_at,omitempty"`
 	TargetFileURL string `json:"target_file_url,omitempty"`
+	EnqueuedAt    string `json:"enqueued_at,omitempty"`
+	CompletedAt   string `json:"completed_at,omitempty"`
 }
 
 func NewFromTaskInfoList(infoList []*asynq.TaskInfo) ([]*Inference, error) {
@@ -51,10 +53,11 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		return nil, err
 	}
 
-	var failedAt int64 = 0
+	var failedAt time.Time
 	if info.LastFailedAt.UnixMilli() > 0 {
-		failedAt = info.LastFailedAt.UnixMilli()
+		failedAt = time.UnixMilli(info.LastFailedAt.UnixMilli())
 	}
+
 	return &Inference{
 		ID:            utils.BuildInferenceKey(info.Queue, info.ID),
 		Model:         payload.Model,
@@ -64,7 +67,9 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		Deadline:      info.Deadline.Format(time.RFC3339),
 		Retried:       info.Retried,
 		LastErr:       info.LastErr,
-		LastFailedAt:  failedAt,
+		LastFailedAt:  failedAt.Format(time.RFC3339),
 		TargetFileURL: payload.TargetFileURL,
+		EnqueuedAt:    time.UnixMilli(payload.EnqueuedAt).Format(time.RFC3339),
+		CompletedAt:   info.CompletedAt.Format(time.RFC3339),
 	}, nil
 }

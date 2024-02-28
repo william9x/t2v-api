@@ -16,6 +16,7 @@ type InferPayload struct {
 	GuidanceScale     float32
 	TargetFileName    string
 	TargetFileURL     string
+	EnqueuedAt        int64
 }
 
 func (p *InferPayload) Packed() ([]byte, error) {

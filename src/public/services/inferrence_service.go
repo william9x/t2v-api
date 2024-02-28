@@ -124,5 +124,6 @@ func newInferPayload(
 		GuidanceScale:     req.GuidanceScale,
 		TargetFileName:    targetFileName,
 		TargetFileURL:     targetFileURL,
+		EnqueuedAt:        time.Now().UnixMilli(),
 	}
 }

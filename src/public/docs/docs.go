@@ -363,8 +363,14 @@ const docTemplate = `{
         "resources.Inference": {
             "type": "object",
             "properties": {
+                "completed_at": {
+                    "type": "string"
+                },
                 "deadline": {
                     "description": "Deadline for completing the task",
+                    "type": "string"
+                },
+                "enqueued_at": {
                     "type": "string"
                 },
                 "id": {
@@ -374,7 +380,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "last_failed_at": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "max_retry": {
                     "type": "integer"
@@ -401,9 +407,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "string"
-                },
-                "path": {
                     "type": "string"
                 },
                 "trigger_words": {
