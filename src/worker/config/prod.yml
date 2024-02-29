@@ -9,7 +9,7 @@ app:
     PublicEndpoint: https://storage.bralyvn.com
     AccessKeyID: I2TCgnjRBzblw6rP50sO
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
-    UseSSL: false
+    UseSSL: true
     BucketName: sira
   files:
     BaseOutputPath: "/root/app/t2v-out"

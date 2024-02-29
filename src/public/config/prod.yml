@@ -12,7 +12,7 @@ app:
     PublicEndpoint: https://storage.bralyvn.com
     AccessKeyID: I2TCgnjRBzblw6rP50sO
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
-    UseSSL: false
+    UseSSL: true
     BucketName: sira
   asynq:
     Addr: 10.0.0.2:6379
