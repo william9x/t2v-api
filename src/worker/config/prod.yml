@@ -5,7 +5,7 @@ app:
     JsonOutputMode: true
   swagger.enabled: false
   minio:
-    Endpoint: 94.72.114.16
+    Endpoint: storage.bralyvn.com
     PublicEndpoint: https://storage.bralyvn.com
     AccessKeyID: I2TCgnjRBzblw6rP50sO
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
