@@ -18,16 +18,26 @@ test:
 
 api:
 	docker build \
-		-t namnam206/t2v-api:latest \
+		-t namnam206/sira-api:latest \
 		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
 		. && \
-		docker push namnam206/t2v-api:latest
+		docker push namnam206/sira-api:latest
 
 worker:
 	docker build \
-		-t namnam206/t2v-worker:latest \
+		-t namnam206/sira-worker:latest \
 		--build-arg="BUILD_MODULE=worker" \
 		-f ./docker/Dockerfile \
 		. && \
-		docker push namnam206/t2v-worker:latest
+		docker push namnam206/sira-worker:latest
+
+build_prod:
+	docker build \
+		-t namnam206/sira-api:1.0.0 \
+		--build-arg="BUILD_MODULE=public" \
+		-f ./docker/Dockerfile \
+		.
+
+push_prod:
+	docker push namnam206/sira-api:1.0.0
