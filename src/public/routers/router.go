@@ -1,8 +1,10 @@
 package routers
 
 import (
+	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-public/controllers"
 	"github.com/Braly-Ltd/t2v-api-public/docs"
+	"github.com/Braly-Ltd/t2v-api-public/middlewares"
 	"github.com/Braly-Ltd/t2v-api-public/properties"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib"
@@ -22,6 +24,8 @@ type RegisterRoutersIn struct {
 	InferenceController *controllers.InferenceController
 	ModelController     *controllers.ModelController
 	PromptController    *controllers.PromptController
+
+	AuthenticationPort ports.AuthenticationPort
 }
 
 func RegisterGinRouters(p RegisterRoutersIn) {
@@ -35,6 +39,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	}
 
 	apiV1Group := group.Group("/api/v1")
+	apiV1Group.Use(middlewares.Authenticate(p.AuthenticationPort))
 
 	// Model APIs
 	apiV1Group.GET("/models", p.ModelController.GetModels)

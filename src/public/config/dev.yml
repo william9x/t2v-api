@@ -5,7 +5,7 @@ app:
     CertFile: "/home/ssl/fullchain.pem"
     KeyFile: "/home/ssl/privkey.pem"
   firebase:
-    CredentialsFile: "/home/"
+    CredentialsFile: "/home/liam/go/src/t2v-api/src/resources/sira-firebase-service-account.json"
   logging:
     development: true
   swagger.enabled: true
