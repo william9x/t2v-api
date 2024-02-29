@@ -1,0 +1,26 @@
+app:
+  port: 8081
+  logging:
+    development: true
+    JsonOutputMode: true
+  swagger.enabled: false
+  minio:
+    Endpoint: 94.72.114.16
+    PublicEndpoint: https://storage.bralyvn.com
+    AccessKeyID: I2TCgnjRBzblw6rP50sO
+    SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
+    UseSSL: false
+    BucketName: sira
+  files:
+    BaseOutputPath: "/root/app/t2v-out"
+  animatelcm:
+    Endpoint: http://localhost:8080
+    InferPath: /api/v1/infer/animate_lcm
+  asynq:
+    Addr: 94.72.114.19:6379
+    Password: 2V324tBa6x0joVSzza3OG
+    DB: 1
+    Queues:
+      t2v_default: 10
+    Worker:
+      Concurrency: 1
