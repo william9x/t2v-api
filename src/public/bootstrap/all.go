@@ -39,6 +39,7 @@ func All() fx.Option {
 		golib.ProvideProps(properties.NewInferenceProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
+		golib.ProvideProps(adapterProps.NewFirebaseProperties),
 
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
@@ -55,6 +56,9 @@ func All() fx.Option {
 		fx.Provide(fx.Annotate(
 			adapter.NewAnimateLCMAdapter, fx.As(new(ports.InferencePort))),
 		),
+		//fx.Provide(fx.Annotate(
+		//	adapter.NewFirebaseAdapter, fx.As(new(ports.AuthenticationPort))),
+		//),
 
 		// Provide use cases
 		fx.Provide(services.NewInferenceService),

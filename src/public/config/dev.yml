@@ -4,6 +4,8 @@ app:
     Enabled: false
     CertFile: "/home/ssl/fullchain.pem"
     KeyFile: "/home/ssl/privkey.pem"
+  firebase:
+    CredentialsFile: "/home/"
   logging:
     development: true
   swagger.enabled: true
