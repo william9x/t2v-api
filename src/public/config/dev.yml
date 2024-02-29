@@ -17,6 +17,6 @@ app:
     UseSSL: false
     BucketName: text-to-video
   asynq:
-    Addr: redis:6379
-    Password: braly@123
+    Addr: 94.72.114.19:6379
+    Password: 2V324tBa6x0joVSzza3OG
     DB: 1
