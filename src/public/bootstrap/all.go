@@ -12,11 +12,13 @@ import (
 	"github.com/Braly-Ltd/t2v-api-public/properties"
 	"github.com/Braly-Ltd/t2v-api-public/routers"
 	"github.com/Braly-Ltd/t2v-api-public/services"
+	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
 	"github.com/golibs-starter/golib/log"
 	"go.uber.org/fx"
 	"net/http"
+	"os"
 )
 
 func All() fx.Option {
@@ -91,6 +93,14 @@ func OnStartHttpsServerHook(lc fx.Lifecycle, app *golib.App, httpServer *http.Se
 				httpServer.Addr, app.Name(), app.Path())
 			go func() {
 				if tls.Enabled {
+					log.Infof("Activating Release mode and TLS")
+					gin.SetMode(gin.ReleaseMode)
+					if _, err := os.Stat("/app/ssl/fullchain.pem"); errors.Is(err, os.ErrNotExist) {
+						log.Fatalf("fullchain not exist")
+					}
+					if _, err := os.Stat("/app/ssl/privkey.pem"); errors.Is(err, os.ErrNotExist) {
+						log.Fatalf("privkey not exist")
+					}
 					if err := httpServer.ListenAndServeTLS(tls.CertFile, tls.KeyFile); err != nil && !errors.Is(err, http.ErrServerClosed) {
 						log.Errorf("Could not serve HTTP request at %s, error [%v]", httpServer.Addr, err)
 					}
