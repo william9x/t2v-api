@@ -15,5 +15,5 @@ type MiddlewaresProperties struct {
 }
 
 func (t *MiddlewaresProperties) Prefix() string {
-	return "app.inference"
+	return "app.middlewares"
 }
