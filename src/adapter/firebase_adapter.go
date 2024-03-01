@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/entities"
+	"github.com/golibs-starter/golib/log"
 	"google.golang.org/api/option"
 )
 
@@ -34,6 +35,7 @@ func NewFirebaseAdapter(props *properties.FirebaseProperties) (*FirebaseAdapter,
 func (r *FirebaseAdapter) Authenticate(ctx context.Context, token string) (entities.TokenData, error) {
 	tokenData, err := r.authClient.VerifyIDToken(ctx, token)
 	if err != nil {
+		log.Warnf("error verifying token: %v", err)
 		return entities.TokenData{}, err
 	}
 	return entities.TokenData{
