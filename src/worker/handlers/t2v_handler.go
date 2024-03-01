@@ -45,7 +45,9 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	}
 	log.Infoc(ctx, "task %s is processing", task.Type())
 	log.Debugc(ctx, "task payload: %+v", vcPayload)
-
+	if vcPayload.Prompt == "error" {
+		return fmt.Errorf("temp debug")
+	}
 	cmd := entities.InferenceCommand{
 		Prompt:            vcPayload.Prompt,
 		NegativePrompt:    vcPayload.NegativePrompt,
