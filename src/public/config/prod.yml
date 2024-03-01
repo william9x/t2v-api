@@ -4,6 +4,8 @@ app:
     Enabled: true
     CertFile: "/app/ssl/fullchain.pem"
     KeyFile: "/app/ssl/privkey.pem"
+  firebase:
+    CredentialsFile: "/app/ssl/sira-firebase-service-account.json"
   logging:
     development: true
   swagger.enabled: true
