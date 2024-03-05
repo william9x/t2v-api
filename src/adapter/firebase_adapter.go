@@ -2,13 +2,9 @@ package adapter
 
 import (
 	"context"
-	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
-	"fmt"
-	"github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/entities"
 	"github.com/golibs-starter/golib/log"
-	"google.golang.org/api/option"
 )
 
 // FirebaseAdapter ...
@@ -17,18 +13,9 @@ type FirebaseAdapter struct {
 }
 
 // NewFirebaseAdapter ...
-func NewFirebaseAdapter(props *properties.FirebaseProperties) (*FirebaseAdapter, error) {
-	opt := option.WithCredentialsFile(props.CredentialsFile)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
-	if err != nil {
-		return nil, fmt.Errorf("error initializing firebase app: %v", err)
-	}
-	client, err := app.Auth(context.Background())
-	if err != nil {
-		return nil, fmt.Errorf("error initializing firebase auth client: %v", err)
-	}
+func NewFirebaseAdapter(authClient *auth.Client) (*FirebaseAdapter, error) {
 	return &FirebaseAdapter{
-		authClient: client,
+		authClient: authClient,
 	}, nil
 }
 

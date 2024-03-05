@@ -4,6 +4,8 @@ app:
     Enabled: false
     CertFile: "/home/ssl/fullchain.pem"
     KeyFile: "/home/ssl/privkey.pem"
+  middlewares:
+    AuthenticationEnable: false
   firebase:
     CredentialsFile: "/home/ssl/sira-firebase-service-account.json"
   logging:

@@ -16,9 +16,10 @@ import (
 
 type RegisterRoutersIn struct {
 	fx.In
-	App          *golib.App
-	Engine       *gin.Engine
-	SwaggerProps *properties.SwaggerProperties
+	App                   *golib.App
+	Engine                *gin.Engine
+	SwaggerProps          *properties.SwaggerProperties
+	MiddlewaresProperties *properties.MiddlewaresProperties
 
 	Actuator            *actuator.Endpoint
 	InferenceController *controllers.InferenceController
@@ -39,7 +40,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	}
 
 	apiV1Group := group.Group("/api/v1")
-	apiV1Group.Use(middlewares.Authenticate(p.AuthenticationPort))
+	apiV1Group.Use(middlewares.Authenticate(p.AuthenticationPort, p.MiddlewaresProperties))
 
 	// Model APIs
 	apiV1Group.GET("/models", p.ModelController.GetModels)
