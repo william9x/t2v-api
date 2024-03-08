@@ -41,6 +41,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 
 	apiV1Group := group.Group("/api/v1")
 	apiV1Group.Use(middlewares.Authenticate(p.AuthenticationPort, p.MiddlewaresProperties))
+	apiV1Group.Use(middlewares.LogExtraHeader())
 
 	// Model APIs
 	apiV1Group.GET("/models", p.ModelController.GetModels)
