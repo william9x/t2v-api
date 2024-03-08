@@ -15,18 +15,15 @@ import (
 
 type InferenceController struct {
 	modelProps       *properties.ModelProperties
-	inferenceProps   *properties.InferenceProperties
 	inferenceService *services.InferenceService
 }
 
 func NewInferenceController(
 	modelProps *properties.ModelProperties,
-	inferenceProps *properties.InferenceProperties,
 	inferenceService *services.InferenceService,
 ) *InferenceController {
 	return &InferenceController{
 		modelProps:       modelProps,
-		inferenceProps:   inferenceProps,
 		inferenceService: inferenceService,
 	}
 }

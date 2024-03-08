@@ -5,7 +5,8 @@ import (
 )
 
 type FirebaseProperties struct {
-	CredentialsFile string
+	CredentialsFileAndroid string
+	CredentialsFileIOS     string
 }
 
 func NewFirebaseProperties(loader config.Loader) (*FirebaseProperties, error) {

@@ -6,7 +6,6 @@ import (
 
 type InferPayload struct {
 	Model             string
-	Type              string
 	Prompt            string
 	NegativePrompt    string
 	NumInferenceSteps int

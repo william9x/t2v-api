@@ -2,38 +2,35 @@ package adapter
 
 import (
 	"context"
-	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
-	"fmt"
-	"github.com/Braly-Ltd/t2v-api-adapter/properties"
+	"github.com/Braly-Ltd/t2v-api-adapter/clients"
 	"github.com/Braly-Ltd/t2v-api-core/entities"
 	"github.com/golibs-starter/golib/log"
-	"google.golang.org/api/option"
 )
 
 // FirebaseAdapter ...
 type FirebaseAdapter struct {
-	authClient *auth.Client
+	authClient *clients.AuthClient
 }
 
 // NewFirebaseAdapter ...
-func NewFirebaseAdapter(props *properties.FirebaseProperties) (*FirebaseAdapter, error) {
-	opt := option.WithCredentialsFile(props.CredentialsFile)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
-	if err != nil {
-		return nil, fmt.Errorf("error initializing firebase app: %v", err)
-	}
-	client, err := app.Auth(context.Background())
-	if err != nil {
-		return nil, fmt.Errorf("error initializing firebase auth client: %v", err)
-	}
+func NewFirebaseAdapter(authClient *clients.AuthClient) (*FirebaseAdapter, error) {
 	return &FirebaseAdapter{
-		authClient: client,
+		authClient: authClient,
 	}, nil
 }
 
-func (r *FirebaseAdapter) Authenticate(ctx context.Context, token string) (entities.TokenData, error) {
-	tokenData, err := r.authClient.VerifyIDToken(ctx, token)
+func (r *FirebaseAdapter) Authenticate(ctx context.Context, agent, token string) (entities.TokenData, error) {
+
+	var tokenData *auth.Token
+	var err error
+
+	if agent == "ios" {
+		tokenData, err = r.authClient.IOS.VerifyIDToken(ctx, token)
+	} else {
+		tokenData, err = r.authClient.Android.VerifyIDToken(ctx, token)
+	}
+
 	if err != nil {
 		log.Warnf("error verifying token: %v", err)
 		return entities.TokenData{}, err

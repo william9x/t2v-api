@@ -43,7 +43,7 @@ func (r *MinIOAdapter) UploadFile(ctx context.Context, object *entities.File) er
 
 func (r *MinIOAdapter) UploadFilePath(ctx context.Context, targetFile, targetName string) error {
 	info, err := r.client.FPutObject(ctx, r.props.BucketName, targetName, targetFile, minio.PutObjectOptions{
-		ContentType: "application/octet-stream",
+		ContentType: "video/mp4",
 	})
 	if err != nil {
 		return fmt.Errorf("upload file path error: %v", err)

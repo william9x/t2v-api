@@ -8,10 +8,10 @@ import (
 	adapterProps "github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-public/controllers"
-	"github.com/Braly-Ltd/t2v-api-public/middlewares"
 	"github.com/Braly-Ltd/t2v-api-public/properties"
 	"github.com/Braly-Ltd/t2v-api-public/routers"
 	"github.com/Braly-Ltd/t2v-api-public/services"
+	"github.com/Braly-Ltd/t2v-api-public/validators"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
@@ -36,7 +36,7 @@ func All() fx.Option {
 		golib.ProvideProps(properties.NewTLSProperties),
 		golib.ProvideProps(properties.NewModelProperties),
 		golib.ProvideProps(properties.NewPromptProperties),
-		golib.ProvideProps(properties.NewInferenceProperties),
+		golib.ProvideProps(properties.NewMiddlewaresProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 		golib.ProvideProps(adapterProps.NewFirebaseProperties),
@@ -45,6 +45,7 @@ func All() fx.Option {
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewAsynqInspector),
+		fx.Provide(clients.NewFirebaseAuthClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -73,7 +74,9 @@ func All() fx.Option {
 		// actuator endpoints and application routers
 		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
-		fx.Invoke(middlewares.RegisterFormValidators),
+
+		// Register custom validators
+		fx.Invoke(validators.RegisterFormValidators),
 
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.

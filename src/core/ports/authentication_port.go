@@ -6,5 +6,5 @@ import (
 )
 
 type AuthenticationPort interface {
-	Authenticate(ctx context.Context, token string) (entities.TokenData, error)
+	Authenticate(ctx context.Context, agent, token string) (entities.TokenData, error)
 }

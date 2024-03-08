@@ -114,7 +114,6 @@ func newInferPayload(
 ) *entities.InferPayload {
 	return &entities.InferPayload{
 		Model:             req.Model,
-		Type:              req.Type,
 		Prompt:            req.Prompt,
 		NegativePrompt:    req.NegativePrompt,
 		NumInferenceSteps: req.NumInferenceSteps,
