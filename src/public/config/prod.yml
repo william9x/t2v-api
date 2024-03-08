@@ -5,7 +5,7 @@ app:
     CertFile: "/app/ssl/fullchain.pem"
     KeyFile: "/app/ssl/privkey.pem"
   firebase:
-    CredentialsFile: "/app/ssl/sira-firebase-service-account.json"
+    CredentialsFileAndroid: "/app/ssl/sira-firebase-service-account.json"
     CredentialsFileIOS: "/app/ssl/sira-ios-firebase-service-account.json"
   logging:
     development: true
