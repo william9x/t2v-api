@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Braly-Ltd/t2v-api-core/constants"
 	"github.com/google/uuid"
+	"slices"
 	"strings"
 )
 
@@ -34,4 +35,9 @@ func ExtractInferenceKey(key string) (string, string) {
 		return "", ""
 	}
 	return ids[0], ids[1]
+}
+
+func RemoveDuplicate(list []string) []string {
+	slices.Sort(list)
+	return slices.Compact[[]string, string](list)
 }

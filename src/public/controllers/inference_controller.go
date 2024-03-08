@@ -15,17 +15,20 @@ import (
 )
 
 type InferenceController struct {
-	modelProps       *properties.ModelProperties
-	inferenceService *services.InferenceService
+	modelProps        *properties.ModelProperties
+	inferenceService  *services.InferenceService
+	profanityDetector *goaway.ProfanityDetector
 }
 
 func NewInferenceController(
 	modelProps *properties.ModelProperties,
 	inferenceService *services.InferenceService,
+	profanityDetector *goaway.ProfanityDetector,
 ) *InferenceController {
 	return &InferenceController{
-		modelProps:       modelProps,
-		inferenceService: inferenceService,
+		modelProps:        modelProps,
+		inferenceService:  inferenceService,
+		profanityDetector: profanityDetector,
 	}
 }
 
@@ -134,8 +137,8 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		return
 	}
 
-	if goaway.IsProfane(req.Prompt) {
-		response.WriteError(ctx.Writer, exception.New(40001, "Profane prompt"))
+	if c.profanityDetector.IsProfane(req.Prompt) {
+		response.WriteError(ctx.Writer, exception.New(40001, "Prompt contains unacceptable words"))
 		return
 	}
 

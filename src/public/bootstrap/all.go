@@ -63,6 +63,7 @@ func All() fx.Option {
 
 		// Provide use cases
 		fx.Provide(services.NewInferenceService),
+		fx.Provide(services.NewProfanityDetector),
 
 		// Provide controllers, these controllers will be used
 		// when register router was invoked
