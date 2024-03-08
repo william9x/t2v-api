@@ -3,24 +3,34 @@ package adapter
 import (
 	"context"
 	"firebase.google.com/go/auth"
+	"github.com/Braly-Ltd/t2v-api-adapter/clients"
 	"github.com/Braly-Ltd/t2v-api-core/entities"
 	"github.com/golibs-starter/golib/log"
 )
 
 // FirebaseAdapter ...
 type FirebaseAdapter struct {
-	authClient *auth.Client
+	authClient *clients.AuthClient
 }
 
 // NewFirebaseAdapter ...
-func NewFirebaseAdapter(authClient *auth.Client) (*FirebaseAdapter, error) {
+func NewFirebaseAdapter(authClient *clients.AuthClient) (*FirebaseAdapter, error) {
 	return &FirebaseAdapter{
 		authClient: authClient,
 	}, nil
 }
 
-func (r *FirebaseAdapter) Authenticate(ctx context.Context, token string) (entities.TokenData, error) {
-	tokenData, err := r.authClient.VerifyIDToken(ctx, token)
+func (r *FirebaseAdapter) Authenticate(ctx context.Context, agent, token string) (entities.TokenData, error) {
+
+	var tokenData *auth.Token
+	var err error
+
+	if agent == "ios" {
+		tokenData, err = r.authClient.IOS.VerifyIDToken(ctx, token)
+	} else {
+		tokenData, err = r.authClient.Android.VerifyIDToken(ctx, token)
+	}
+
 	if err != nil {
 		log.Warnf("error verifying token: %v", err)
 		return entities.TokenData{}, err
