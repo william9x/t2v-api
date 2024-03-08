@@ -5,6 +5,7 @@ go 1.21.6
 require (
 	github.com/Braly-Ltd/t2v-api-adapter v0.0.0-00010101000000-000000000000
 	github.com/Braly-Ltd/t2v-api-core v0.0.0-00010101000000-000000000000
+	github.com/TwiN/go-away v1.6.13
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.1
 	github.com/golibs-starter/golib v1.0.1

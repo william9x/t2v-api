@@ -7,6 +7,7 @@ import (
 	"github.com/Braly-Ltd/t2v-api-public/requests"
 	"github.com/Braly-Ltd/t2v-api-public/resources"
 	"github.com/Braly-Ltd/t2v-api-public/services"
+	goaway "github.com/TwiN/go-away"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
@@ -133,9 +134,14 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		return
 	}
 
+	if goaway.IsProfane(req.Prompt) {
+		response.WriteError(ctx.Writer, exception.New(40001, "Profane prompt"))
+		return
+	}
+
 	modelProps, exist := c.modelProps.DataMap[req.Model]
 	if !exist {
-		response.WriteError(ctx.Writer, exception.New(40001, "Model not supported"))
+		response.WriteError(ctx.Writer, exception.New(40002, "Model not supported"))
 		return
 	}
 
