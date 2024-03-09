@@ -9,11 +9,18 @@ func NewProfanityDetector() *goaway.ProfanityDetector {
 	profanities := append(goaway.DefaultProfanities, additionalProfanities...)
 	profanities = utils.RemoveDuplicate(profanities)
 
+	falsePositives := append(goaway.DefaultFalsePositives, additionalFalsePositives...)
+	falsePositives = utils.RemoveDuplicate(falsePositives)
+
 	return goaway.NewProfanityDetector().WithCustomDictionary(
 		profanities,
-		goaway.DefaultFalsePositives,
+		falsePositives,
 		goaway.DefaultFalseNegatives,
 	)
+}
+
+var additionalFalsePositives = []string{
+	"sexy",
 }
 
 var additionalProfanities = []string{
@@ -227,7 +234,6 @@ var additionalProfanities = []string{
 	"sex",
 	"sexcam",
 	"sexo",
-	"sexy",
 	"sexual",
 	"sexually",
 	"sexuality",
