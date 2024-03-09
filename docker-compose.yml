@@ -53,14 +53,14 @@ services:
       - backend-private
     ports:
       - "8085:8080"
-    links:
-      - redis
-    depends_on:
-      - redis
+#    links:
+#      - redis
+#    depends_on:
+#      - redis
     environment:
-      REDIS_ADDR: redis:6379
+      REDIS_ADDR: 94.72.114.19:6379
       REDIS_DB: 1
-      REDIS_PASSWORD: braly@123
+      REDIS_PASSWORD: 2V324tBa6x0joVSzza3OG
       READ_ONLY: false
 
 networks:

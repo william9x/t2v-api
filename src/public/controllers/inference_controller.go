@@ -149,7 +149,7 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 	}
 
 	if len(modelProps.TriggerWords) > 1 {
-		req.Prompt = fmt.Sprintf("%s %s", req.Prompt, modelProps.TriggerWords)
+		req.Prompt = fmt.Sprintf("%s %s", modelProps.TriggerWords, req.Prompt)
 	}
 
 	resp, err := c.inferenceService.CreateInference(ctx, req)
