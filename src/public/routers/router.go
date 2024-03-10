@@ -53,4 +53,5 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 
 	// Prompt APIs
 	apiV1Group.GET("/prompts/suggest", p.PromptController.GetRandomPrompt)
+	apiV1Group.GET("/prompts/profanity", p.PromptController.CheckProfanity)
 }

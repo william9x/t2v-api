@@ -18,3 +18,8 @@ type CreateInferenceRequest struct {
 type FilterInferenceRequest struct {
 	IDs []string `json:"ids,omitempty" binding:"required"`
 }
+
+// CheckPromptProfanity ...
+type CheckPromptProfanity struct {
+	Prompt string `json:"prompt,omitempty" binding:"required"`
+}

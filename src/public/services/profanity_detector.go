@@ -22,6 +22,7 @@ func NewProfanityDetector() *goaway.ProfanityDetector {
 var additionalFalsePositives = []string{
 	"sexy",
 	"sexiest",
+	"gundam",
 }
 
 var additionalProfanities = []string{
