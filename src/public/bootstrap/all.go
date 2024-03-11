@@ -8,6 +8,7 @@ import (
 	adapterProps "github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-public/controllers"
+	"github.com/Braly-Ltd/t2v-api-public/middlewares"
 	"github.com/Braly-Ltd/t2v-api-public/properties"
 	"github.com/Braly-Ltd/t2v-api-public/routers"
 	"github.com/Braly-Ltd/t2v-api-public/services"
@@ -76,6 +77,9 @@ func All() fx.Option {
 		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
 
+		// Register custom middlewares
+		fx.Invoke(middlewares.AddCustomHeaders),
+
 		// Register custom validators
 		fx.Invoke(validators.RegisterFormValidators),
 
@@ -89,6 +93,7 @@ func GinHttpServerOpt() fx.Option {
 	return fx.Options(
 		fx.Provide(golibgin.NewGinEngine),
 		fx.Provide(golibgin.NewHTTPServer),
+		fx.Invoke(RegisterMiddlewares),
 		fx.Invoke(golibgin.RegisterHandlers),
 		fx.Invoke(OnStartHttpsServerHook),
 	)
@@ -122,4 +127,10 @@ func OnStartHttpsServerHook(lc fx.Lifecycle, app *golib.App, httpServer *http.Se
 			return nil
 		},
 	})
+}
+
+func RegisterMiddlewares(app *golib.App) {
+	app.AddHandler(
+		middlewares.AddCustomHeaders(),
+	)
 }

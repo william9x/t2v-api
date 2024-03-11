@@ -5,7 +5,7 @@ app:
     CertFile: "/home/ssl/fullchain.pem"
     KeyFile: "/home/ssl/privkey.pem"
   middlewares:
-    AuthenticationEnable: false
+    AuthenticationEnable: true
   firebase:
     CredentialsFileAndroid: "/home/ssl/sira-firebase-service-account.json"
     CredentialsFileAndroidV2: "/home/ssl/sira-firebase-service-account.json"

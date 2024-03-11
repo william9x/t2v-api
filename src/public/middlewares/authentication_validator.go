@@ -6,6 +6,7 @@ import (
 	"github.com/coreos/go-semver/semver"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
+	"github.com/golibs-starter/golib/web/context"
 	"github.com/golibs-starter/golib/web/response"
 	"strings"
 )
@@ -35,11 +36,15 @@ func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresPr
 				agent = "android"
 			}
 		}
-		_, err := port.Authenticate(c, agent, token)
+		tokenData, err := port.Authenticate(c, agent, token)
 		if err != nil {
 			c.AbortWithStatusJSON(401, response.Error(exception.New(403, "invalid access token")))
 			return
 		}
+
+		c.Request.Header.Set("X-User-ID", tokenData.UserID)
+		context.GetOrCreateRequestAttributes(c.Request).SecurityAttributes.UserId = tokenData.UserID
+
 		c.Next()
 	}
 }
