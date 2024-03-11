@@ -27,8 +27,10 @@ func (r *FirebaseAdapter) Authenticate(ctx context.Context, agent, token string)
 
 	if agent == "ios" {
 		tokenData, err = r.authClient.IOS.VerifyIDToken(ctx, token)
-	} else {
+	} else if agent == "android" {
 		tokenData, err = r.authClient.Android.VerifyIDToken(ctx, token)
+	} else {
+		tokenData, err = r.authClient.AndroidV2.VerifyIDToken(ctx, token)
 	}
 
 	if err != nil {

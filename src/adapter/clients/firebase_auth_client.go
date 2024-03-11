@@ -10,8 +10,9 @@ import (
 )
 
 type AuthClient struct {
-	Android *auth.Client
-	IOS     *auth.Client
+	Android   *auth.Client
+	AndroidV2 *auth.Client
+	IOS       *auth.Client
 }
 
 func NewFirebaseAuthClient(props *properties.FirebaseProperties) (*AuthClient, error) {
@@ -21,6 +22,16 @@ func NewFirebaseAuthClient(props *properties.FirebaseProperties) (*AuthClient, e
 	}
 
 	androidAuthClient, err := androidApp.Auth(context.Background())
+	if err != nil {
+		return nil, fmt.Errorf("error initializing firebase auth client for android: %v", err)
+	}
+
+	androidAppV2, err := newFirebaseApp(props.CredentialsFileAndroidV2)
+	if err != nil {
+		return nil, fmt.Errorf("error initializing firebase app for android: %v", err)
+	}
+
+	androidAuthClientV2, err := androidAppV2.Auth(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("error initializing firebase auth client for android: %v", err)
 	}
@@ -36,8 +47,9 @@ func NewFirebaseAuthClient(props *properties.FirebaseProperties) (*AuthClient, e
 	}
 
 	return &AuthClient{
-		Android: androidAuthClient,
-		IOS:     iosAuthClient,
+		Android:   androidAuthClient,
+		AndroidV2: androidAuthClientV2,
+		IOS:       iosAuthClient,
 	}, nil
 }
 

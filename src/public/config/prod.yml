@@ -6,9 +6,10 @@ app:
     KeyFile: "/app/ssl/privkey.pem"
   firebase:
     CredentialsFileAndroid: "/app/ssl/sira-firebase-service-account.json"
+    CredentialsFileAndroidV2: "/app/ssl/sira-android-firebase-service-account.json"
     CredentialsFileIOS: "/app/ssl/sira-ios-firebase-service-account.json"
   logging:
-    development: true
+    development: false
   swagger.enabled: true
   minio:
     Endpoint: storage.bralyvn.com

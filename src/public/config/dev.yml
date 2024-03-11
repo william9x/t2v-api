@@ -8,6 +8,7 @@ app:
     AuthenticationEnable: false
   firebase:
     CredentialsFileAndroid: "/home/ssl/sira-firebase-service-account.json"
+    CredentialsFileAndroidV2: "/home/ssl/sira-firebase-service-account.json"
     CredentialsFileIOS: "/home/ssl/sira-ios-firebase-service-account.json"
   logging:
     development: true

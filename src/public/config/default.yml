@@ -1,12 +1,5 @@
 app:
-  name: Voice Changer API
-  inference:
-    SupportedFiles:
-      - .mp3
-      - .aac
-      - .flac
-      - .alac
-      - .wav
+  name: Sira API
   security:
     http:
       publicUrls:
