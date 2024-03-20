@@ -71,14 +71,12 @@ func All() fx.Option {
 		fx.Provide(controllers.NewInferenceController),
 		fx.Provide(controllers.NewModelController),
 		fx.Provide(controllers.NewPromptController),
+		fx.Provide(controllers.NewNotificationController),
 
 		// Provide gin http server auto config,
 		// actuator endpoints and application routers
 		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
-
-		// Register custom middlewares
-		fx.Invoke(middlewares.AddCustomHeaders),
 
 		// Register custom validators
 		fx.Invoke(validators.RegisterFormValidators),

@@ -21,10 +21,11 @@ type RegisterRoutersIn struct {
 	SwaggerProps          *properties.SwaggerProperties
 	MiddlewaresProperties *properties.MiddlewaresProperties
 
-	Actuator            *actuator.Endpoint
-	InferenceController *controllers.InferenceController
-	ModelController     *controllers.ModelController
-	PromptController    *controllers.PromptController
+	Actuator               *actuator.Endpoint
+	InferenceController    *controllers.InferenceController
+	ModelController        *controllers.ModelController
+	PromptController       *controllers.PromptController
+	NotificationController *controllers.NotificationController
 
 	AuthenticationPort ports.AuthenticationPort
 }
@@ -53,4 +54,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	// Prompt APIs
 	apiV1Group.GET("/prompts/suggest", p.PromptController.GetRandomPrompt)
 	apiV1Group.GET("/prompts/profanity", p.PromptController.CheckProfanity)
+
+	// Notification APIs
+	apiV1Group.POST("/noti/subs", p.NotificationController.Subscribe)
 }
