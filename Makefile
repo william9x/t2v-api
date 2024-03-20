@@ -11,7 +11,7 @@ tidy:
 	cd src/adapter && go mod tidy
 
 swagger-public:
-	cd src/public && swag init --parseDependency --parseDepth=3
+	cd src/public && swag init --parseDependency --parseDepth=3 -q
 
 test:
 	cd src/public && go test ./...

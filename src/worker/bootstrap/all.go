@@ -3,6 +3,7 @@ package bootstrap
 import (
 	adapter "github.com/Braly-Ltd/t2v-api-adapter"
 	"github.com/Braly-Ltd/t2v-api-adapter/clients"
+	"github.com/Braly-Ltd/t2v-api-adapter/firebase"
 	adapterProps "github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-worker/handlers"
@@ -45,6 +46,12 @@ func All() fx.Option {
 		),
 		fx.Provide(fx.Annotate(
 			adapter.NewAnimateLCMAdapter, fx.As(new(ports.InferencePort))),
+		),
+		fx.Provide(fx.Annotate(
+			firebase.NewFirebaseMessagingClient, fx.As(new(ports.NotificationPort))),
+		),
+		fx.Provide(fx.Annotate(
+			adapter.NewNotificationSubscriptionAdapter, fx.As(new(ports.NotificationSubscriptionPort))),
 		),
 
 		// Provide task handlers

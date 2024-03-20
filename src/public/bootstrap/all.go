@@ -5,6 +5,7 @@ import (
 	"errors"
 	adapter "github.com/Braly-Ltd/t2v-api-adapter"
 	"github.com/Braly-Ltd/t2v-api-adapter/clients"
+	"github.com/Braly-Ltd/t2v-api-adapter/firebase"
 	adapterProps "github.com/Braly-Ltd/t2v-api-adapter/properties"
 	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-public/controllers"
@@ -41,12 +42,17 @@ func All() fx.Option {
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 		golib.ProvideProps(adapterProps.NewFirebaseProperties),
+		golib.ProvideProps(adapterProps.NewMongoProperties),
 
 		// Provide clients
+		fx.Provide(clients.NewHTTPClient),
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewAsynqInspector),
-		fx.Provide(clients.NewFirebaseAuthClient),
+		fx.Provide(clients.NewMongoClient),
+		fx.Provide(firebase.NewFirebaseApplication),
+		fx.Provide(firebase.NewFirebaseAuthClient),
+		fx.Provide(firebase.NewFirebaseMessagingClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -56,10 +62,10 @@ func All() fx.Option {
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
 		),
 		fx.Provide(fx.Annotate(
-			adapter.NewAnimateLCMAdapter, fx.As(new(ports.InferencePort))),
+			firebase.NewFirebaseAuthClient, fx.As(new(ports.AuthenticationPort))),
 		),
 		fx.Provide(fx.Annotate(
-			adapter.NewFirebaseAdapter, fx.As(new(ports.AuthenticationPort))),
+			adapter.NewNotificationSubscriptionAdapter, fx.As(new(ports.NotificationSubscriptionPort))),
 		),
 
 		// Provide use cases

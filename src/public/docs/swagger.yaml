@@ -6,15 +6,6 @@ definitions:
     required:
     - prompt
     type: object
-  requests.CreateSubscriptionRequest:
-    properties:
-      token_provider:
-        type: string
-      user_id:
-        type: string
-      user_token:
-        type: string
-    type: object
   requests.FilterInferenceRequest:
     properties:
       ids:
@@ -313,12 +304,7 @@ paths:
         "201":
           description: Created
           schema:
-            allOf:
-            - $ref: '#/definitions/response.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/requests.CreateSubscriptionRequest'
-              type: object
+            $ref: '#/definitions/response.Response'
         "500":
           description: Internal Server Error
           schema:

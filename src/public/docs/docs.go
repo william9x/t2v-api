@@ -344,19 +344,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/requests.CreateSubscriptionRequest"
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/response.Response"
                         }
                     },
                     "500": {
@@ -458,20 +446,6 @@ const docTemplate = `{
             ],
             "properties": {
                 "prompt": {
-                    "type": "string"
-                }
-            }
-        },
-        "requests.CreateSubscriptionRequest": {
-            "type": "object",
-            "properties": {
-                "token_provider": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
-                },
-                "user_token": {
                     "type": "string"
                 }
             }

@@ -10,4 +10,5 @@ type InferenceCommand struct {
 	GuidanceScale     float32 `json:"guidance_scale"`
 	OutputFilePath    string  `json:"output_file_path"`
 	ModelID           string  `json:"model_id"`
+	UserID            string  `json:"user_id"`
 }

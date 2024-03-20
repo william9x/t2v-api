@@ -17,6 +17,9 @@ app:
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
     UseSSL: false
     BucketName: text-to-video
+  mongo:
+    hosts:
+      - root:root_mongodb@194.233.84.28:27017/?compressors=snappy,zlib,zstd
   asynq:
     Addr: localhost:6379
     Password: braly@123

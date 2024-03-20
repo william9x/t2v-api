@@ -5,6 +5,7 @@ import (
 )
 
 type InferPayload struct {
+	UserID            string
 	Model             string
 	Prompt            string
 	NegativePrompt    string
