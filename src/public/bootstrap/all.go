@@ -18,6 +18,8 @@ import (
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
 	"github.com/golibs-starter/golib/log"
+	"github.com/hibiken/asynq"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/fx"
 	"net/http"
 	"os"
@@ -90,6 +92,8 @@ func All() fx.Option {
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.
 		golibgin.OnStopHttpServerOpt(),
+		fx.Invoke(OnStopMongoHook),
+		fx.Invoke(OnStopRedisHook),
 	)
 }
 
@@ -137,4 +141,28 @@ func RegisterMiddlewares(app *golib.App) {
 	app.AddHandler(
 		middlewares.AddCustomHeaders(),
 	)
+}
+
+func OnStopMongoHook(lc fx.Lifecycle, client *mongo.Client) {
+	lc.Append(fx.Hook{
+		OnStop: func(ctx context.Context) error {
+			log.Infof("Disconnecting mongo client")
+			if err := client.Disconnect(ctx); err != nil {
+				log.Errorf("Could not disconnect mongo client, error [%v]", err)
+			}
+			return nil
+		},
+	})
+}
+
+func OnStopRedisHook(lc fx.Lifecycle, client *asynq.Client) {
+	lc.Append(fx.Hook{
+		OnStop: func(ctx context.Context) error {
+			log.Infof("Disconnecting asynq client")
+			if err := client.Close(); err != nil {
+				log.Errorf("Could not disconnect asynq client, error [%v]", err)
+			}
+			return nil
+		},
+	})
 }

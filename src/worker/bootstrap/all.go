@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"context"
 	adapter "github.com/Braly-Ltd/t2v-api-adapter"
 	"github.com/Braly-Ltd/t2v-api-adapter/clients"
 	"github.com/Braly-Ltd/t2v-api-adapter/firebase"
@@ -11,6 +12,9 @@ import (
 	"github.com/Braly-Ltd/t2v-api-worker/routers"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
+	"github.com/golibs-starter/golib/log"
+	"github.com/hibiken/asynq"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/fx"
 )
 
@@ -36,6 +40,7 @@ func All() fx.Option {
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewHTTPClient),
+		fx.Provide(clients.NewMongoClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -73,5 +78,31 @@ func All() fx.Option {
 		// OnStop hooks will run in reverse order.
 		OnStopAsynqWorker(),
 		golibgin.OnStopHttpServerOpt(),
+		fx.Invoke(OnStopMongoHook),
+		fx.Invoke(OnStopRedisHook),
 	)
+}
+
+func OnStopMongoHook(lc fx.Lifecycle, client *mongo.Client) {
+	lc.Append(fx.Hook{
+		OnStop: func(ctx context.Context) error {
+			log.Infof("Disconnecting mongo client")
+			if err := client.Disconnect(ctx); err != nil {
+				log.Errorf("Could not disconnect mongo client, error [%v]", err)
+			}
+			return nil
+		},
+	})
+}
+
+func OnStopRedisHook(lc fx.Lifecycle, client *asynq.Client) {
+	lc.Append(fx.Hook{
+		OnStop: func(ctx context.Context) error {
+			log.Infof("Disconnecting asynq client")
+			if err := client.Close(); err != nil {
+				log.Errorf("Could not disconnect asynq client, error [%v]", err)
+			}
+			return nil
+		},
+	})
 }
