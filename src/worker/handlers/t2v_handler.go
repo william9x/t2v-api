@@ -45,47 +45,48 @@ func (r *T2VHandler) Type() constants.TaskType {
 // 2. Process file
 // 3. Upload processed file to MinIO
 func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
-	var vcPayload entities.InferPayload
-	if err := msgpack.Unmarshal(task.Payload(), &vcPayload); err != nil {
+	var payload entities.InferPayload
+	if err := msgpack.Unmarshal(task.Payload(), &payload); err != nil {
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
-	log.Infoc(ctx, "task %s is processing", task.Type())
-	log.Debugc(ctx, "task payload: %+v", vcPayload)
+	taskID := task.ResultWriter().TaskID()
+	log.Infoc(ctx, "task %s is processing", taskID)
+	log.Debugc(ctx, "task payload: %+v", payload)
 
 	cmd := entities.InferenceCommand{
-		Prompt:            vcPayload.Prompt,
-		NegativePrompt:    vcPayload.NegativePrompt,
-		NumInferenceSteps: vcPayload.NumInferenceSteps,
-		NumFrames:         vcPayload.NumFrames,
-		Width:             vcPayload.Width,
-		Height:            vcPayload.Height,
-		GuidanceScale:     vcPayload.GuidanceScale,
-		OutputFilePath:    fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName),
-		ModelID:           vcPayload.Model,
-		UserID:            vcPayload.UserID,
+		Prompt:            payload.Prompt,
+		NegativePrompt:    payload.NegativePrompt,
+		NumInferenceSteps: payload.NumInferenceSteps,
+		NumFrames:         payload.NumFrames,
+		Width:             payload.Width,
+		Height:            payload.Height,
+		GuidanceScale:     payload.GuidanceScale,
+		OutputFilePath:    fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, payload.TargetFileName),
+		ModelID:           payload.Model,
+		UserID:            payload.UserID,
 	}
 	if err := r.inferencePort.Infer(ctx, cmd); err != nil {
 		return err
 	}
-	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
+	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", taskID, payload.TargetFileName)
 
-	if err := r.objectStoragePort.UploadFilePath(ctx, cmd.OutputFilePath, vcPayload.TargetFileName); err != nil {
+	if err := r.objectStoragePort.UploadFilePath(ctx, cmd.OutputFilePath, payload.TargetFileName); err != nil {
 		log.Errorf("upload file error: %v", err)
 		return err
 	}
 
-	subs, err := r.notiSubscriptionPort.FindByUserID(ctx, vcPayload.UserID)
+	subs, err := r.notiSubscriptionPort.FindByUserID(ctx, payload.UserID)
 	if err != nil {
 		log.Errorf("find user subscription error: %v", err)
 		return err
 	}
 
 	for _, sub := range subs {
-		if _, err := r.notificationPort.SendNoti(ctx, "t2v", "Your video is ready", "Your video is ready", "", sub.UserToken); err != nil {
+		if _, err := r.notificationPort.SendNoti(ctx, "t2v", "Your video is ready", "Your video is ready", "https://storage.bralyvn.com/sira/assets/Discover/DI01_Pixar_Trump_thumb.jpg", sub.UserToken); err != nil {
 			log.Errorf("send notification error: %v", err)
 		}
 	}
 
-	log.Infoc(ctx, "task %s is done", task.Type())
+	log.Infoc(ctx, "task %s is done", taskID)
 	return nil
 }
