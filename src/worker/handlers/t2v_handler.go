@@ -82,7 +82,7 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	}
 
 	for _, sub := range subs {
-		if _, err := r.notificationPort.SendNoti(
+		sentId, err := r.notificationPort.SendNoti(
 			ctx,
 			"t2v",
 			taskID,
@@ -90,9 +90,11 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 			"Your video is ready",
 			"https://storage.bralyvn.com/sira/assets/Discover/DI01_Pixar_Trump_thumb.jpg",
 			sub.UserToken,
-		); err != nil {
+		)
+		if err != nil {
 			log.Errorf("send notification error: %v", err)
 		}
+		log.Debugc(ctx, "notification sent: %s", sentId)
 	}
 
 	log.Infoc(ctx, "task %s is done", taskID)
