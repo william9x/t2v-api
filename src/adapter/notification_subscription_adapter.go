@@ -54,7 +54,7 @@ func (r *NotificationSubscriptionAdapter) FindByUserID(ctx context.Context, user
 	}
 
 	var subscriptions []entities.NotiSubscription
-	if err := result.All(ctx, subscriptions); err != nil {
+	if err := result.All(ctx, &subscriptions); err != nil {
 		return nil, fmt.Errorf("error while decoding user_id: %w", err)
 	}
 
