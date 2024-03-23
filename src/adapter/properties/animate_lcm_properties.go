@@ -12,7 +12,7 @@ type AnimateLCMProperties struct {
 	InferURL string `default:""`
 }
 
-func NewSoVitsVcProperties(loader config.Loader) (*AnimateLCMProperties, error) {
+func NewAnimateLCMProperties(loader config.Loader) (*AnimateLCMProperties, error) {
 	props := AnimateLCMProperties{}
 	err := loader.Bind(&props)
 	return &props, err

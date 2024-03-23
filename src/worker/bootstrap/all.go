@@ -30,17 +30,22 @@ func All() fx.Option {
 		AsynqWorkerOpt(),
 
 		// Provide all application properties
-		golib.ProvideProps(adapterProps.NewMinIOProperties),
-		golib.ProvideProps(adapterProps.NewAsynqProperties),
-		golib.ProvideProps(adapterProps.NewSoVitsVcProperties),
 		golib.ProvideProps(properties.NewFileProperties),
 		golib.ProvideProps(properties.NewWorkerProperties),
+		golib.ProvideProps(adapterProps.NewMinIOProperties),
+		golib.ProvideProps(adapterProps.NewAsynqProperties),
+		golib.ProvideProps(adapterProps.NewAnimateLCMProperties),
+		golib.ProvideProps(adapterProps.NewFirebaseProperties),
+		golib.ProvideProps(adapterProps.NewMongoProperties),
 
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewHTTPClient),
 		fx.Provide(clients.NewMongoClient),
+
+		fx.Provide(firebase.NewFirebaseApplication),
+		fx.Provide(firebase.NewFirebaseMessagingClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(

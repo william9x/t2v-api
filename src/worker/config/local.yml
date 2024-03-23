@@ -4,6 +4,10 @@ app:
     development: true
     JsonOutputMode: false
   swagger.enabled: false
+  firebase:
+    CredentialsFileAndroid: "/home/liam/Documents/sira/dev/sira-firebase-service-account.json"
+    CredentialsFileAndroidV2: "/home/liam/Documents/sira/dev/sira-firebase-service-account.json"
+    CredentialsFileIOS: "/home/liam/Documents/sira/dev/sira-firebase-service-account.json"
   minio:
     Endpoint: dev.storage.bralyvn.com
     PublicEndpoint: https://dev.storage.bralyvn.com
@@ -16,6 +20,9 @@ app:
   animatelcm:
     Endpoint: http://localhost:8082
     InferPath: /api/v1/infer/animatelcm
+  mongo:
+    hosts:
+      - root:root_mongodb@194.233.84.28:27017/?compressors=snappy,zlib,zstd
   asynq:
     Addr: localhost:6379
     Password: braly@123
