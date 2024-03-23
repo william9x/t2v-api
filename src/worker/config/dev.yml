@@ -9,12 +9,12 @@ app:
     CredentialsFileAndroidV2: "/root/app/certs/sira-firebase-service-account.json"
     CredentialsFileIOS: "/root/app/certs/sira-firebase-service-account.json"
   minio:
-    Endpoint: dev.storage.bralyvn.com
-    PublicEndpoint: https://dev.storage.bralyvn.com
-    AccessKeyID: uCCpbIoWR4ddYi1I94MS
-    SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
-    UseSSL: false
-    BucketName: text-to-video
+    Endpoint: storage.bralyvn.com
+    PublicEndpoint: https://storage.bralyvn.com
+    AccessKeyID: I2TCgnjRBzblw6rP50sO
+    SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
+    UseSSL: true
+    BucketName: sira-dev
   mongo:
     hosts:
       - root:root_mongodb@194.233.84.28:27017/?compressors=snappy,zlib,zstd

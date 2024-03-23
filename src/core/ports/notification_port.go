@@ -5,5 +5,5 @@ import (
 )
 
 type NotificationPort interface {
-	SendNoti(ctx context.Context, agent, title, body, image, token string) (string, error)
+	SendNoti(ctx context.Context, agent, taskID, title, body, image, token string) (string, error)
 }

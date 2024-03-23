@@ -36,7 +36,7 @@ func NewFirebaseMessagingClient(app *Application) (*MessagingClient, error) {
 	}, nil
 }
 
-func (r *MessagingClient) SendNoti(ctx context.Context, agent, title, body, image, token string) (string, error) {
+func (r *MessagingClient) SendNoti(ctx context.Context, agent, taskID, title, body, image, token string) (string, error) {
 	var msgClient *messaging.Client
 	if agent == "ios" {
 		msgClient = r.IOS
@@ -44,12 +44,18 @@ func (r *MessagingClient) SendNoti(ctx context.Context, agent, title, body, imag
 		msgClient = r.AndroidV2
 	}
 
+	data := make(map[string]string)
+	data["task_id"] = taskID
+	data["title"] = title
+	data["body"] = body
+	data["image"] = image
 	msg := &messaging.Message{
 		Notification: &messaging.Notification{
 			Title:    title,
 			Body:     body,
 			ImageURL: image,
 		},
+		Data:  data,
 		Token: token,
 	}
 	return msgClient.Send(ctx, msg)
