@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
+	"github.com/golibs-starter/golib/web/constant"
 	"github.com/golibs-starter/golib/web/response"
 )
 
@@ -152,6 +153,7 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		req.Prompt = fmt.Sprintf("%s %s", modelProps.TriggerWords, req.Prompt)
 	}
 
+	req.UserID = ctx.GetHeader(constant.HeaderDeviceId)
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)

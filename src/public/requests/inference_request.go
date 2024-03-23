@@ -2,8 +2,9 @@ package requests
 
 // CreateInferenceRequest ...
 type CreateInferenceRequest struct {
-	Model string `form:"model,omitempty" binding:"notblank"`
-	Type  string `form:"type,omitempty,default=t2v"`
+	Model  string `form:"model,omitempty" binding:"notblank"`
+	Type   string `form:"type,omitempty,default=t2v"`
+	UserID string `form:"user_id,omitempty"`
 
 	Prompt            string  `form:"prompt,omitempty" binding:"notblank"`
 	NegativePrompt    string  `form:"negative_prompt,omitempty"`

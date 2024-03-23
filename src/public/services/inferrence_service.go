@@ -124,5 +124,6 @@ func newInferPayload(
 		TargetFileName:    targetFileName,
 		TargetFileURL:     targetFileURL,
 		EnqueuedAt:        time.Now().UnixMilli(),
+		UserID:            req.UserID,
 	}
 }
