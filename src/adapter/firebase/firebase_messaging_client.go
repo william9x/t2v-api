@@ -49,7 +49,7 @@ func (r *MessagingClient) SendNoti(ctx context.Context, agent, taskID, title, bo
 	data["title"] = title
 	data["body"] = body
 	data["image"] = image
-	msg := &messaging.Message{
+	msg := messaging.Message{
 		Notification: &messaging.Notification{
 			Title:    title,
 			Body:     body,
@@ -58,5 +58,5 @@ func (r *MessagingClient) SendNoti(ctx context.Context, agent, taskID, title, bo
 		Data:  data,
 		Token: token,
 	}
-	return msgClient.Send(ctx, msg)
+	return msgClient.Send(ctx, &msg)
 }

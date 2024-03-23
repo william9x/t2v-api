@@ -85,8 +85,8 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	for _, sub := range subs {
 		sentId, err := r.notificationPort.SendNoti(
 			ctx,
-			"t2v",
 			taskID,
+			"android",
 			"Your video is ready",
 			"Your video is ready",
 			"https://storage.bralyvn.com/sira/assets/Discover/DI01_Pixar_Trump_thumb.jpg",
