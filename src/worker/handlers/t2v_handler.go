@@ -80,6 +80,7 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		log.Errorf("find user subscription error: %v", err)
 		return err
 	}
+	log.Debugc(ctx, "found %d subscriptions for user %s", len(subs), payload.UserID)
 
 	for _, sub := range subs {
 		sentId, err := r.notificationPort.SendNoti(
