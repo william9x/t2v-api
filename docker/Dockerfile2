@@ -1,17 +1,17 @@
 FROM pytorch/pytorch:2.2.1-cuda11.8-cudnn8-devel
 
 # Install common tools
-RUN apt-get update && apt-get install -y nano lsof screen;
+RUN apt-get update && apt-get install -y nano lsof screen
 
 # Install ffmpeg
-RUN apt-get update && apt-get install -y libx11-6 libgl1 ffmpeg;
+RUN apt-get update && apt-get install -y ffmpeg libx11-6 libgl1 libx265-dev libnuma-dev libx264-dev
 
 # Install git-lfs
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash &&  \
-        sudo apt-get install git-lfs
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash &&  \
+        apt-get install -y git-lfs
 
 # Install golang 1.22.1
 RUN wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz &&  \
-    sudo tar -xvf go1.22.1.linux-amd64.tar.gz -C /usr/local  &&  \
+    tar -xvf go1.22.1.linux-amd64.tar.gz -C /usr/local  &&  \
     rm go1.22.1.linux-amd64.tar.gz &&  \
     echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
