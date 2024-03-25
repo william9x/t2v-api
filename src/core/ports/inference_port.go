@@ -6,5 +6,5 @@ import (
 )
 
 type InferencePort interface {
-	Infer(context.Context, entities.InferenceCommand) error
+	Infer(context.Context, entities.InferenceCommand) (entities.InferenceResult, error)
 }

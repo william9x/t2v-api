@@ -13,6 +13,7 @@ import (
 	"github.com/golibs-starter/golib/log"
 	"github.com/golibs-starter/golib/web/constant"
 	"github.com/golibs-starter/golib/web/response"
+	"strings"
 )
 
 type InferenceController struct {
@@ -154,6 +155,12 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 	}
 
 	req.UserID = ctx.GetHeader(constant.HeaderDeviceId)
+
+	if agent := ctx.GetHeader(constant.HeaderUserAgent); agent != "" {
+		req.Agent = strings.Split(agent, "/")[0]
+		req.Agent = strings.ToLower(req.Agent)
+	}
+
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)

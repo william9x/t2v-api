@@ -125,5 +125,6 @@ func newInferPayload(
 		TargetFileURL:     targetFileURL,
 		EnqueuedAt:        time.Now().UnixMilli(),
 		UserID:            req.UserID,
+		Agent:             req.Agent,
 	}
 }
