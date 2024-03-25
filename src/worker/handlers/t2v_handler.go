@@ -101,7 +101,7 @@ func (r *T2VHandler) sendNoti(ctx context.Context, userID, agent, taskID, imageU
 
 	title := "🎬 Production Complete!"
 	body := "Your video is ready for the spotlight. Watch you creation!"
-	image := imageURL
+	image, _ := r.objectStoragePort.GetPreSignedObject(ctx, imageURL)
 	if !success {
 		title = "🔄 Ooops! Take Another Shot!"
 		body = "We're unable to create your video. Go ahead and give it another go!"
