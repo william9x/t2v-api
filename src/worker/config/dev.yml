@@ -22,7 +22,7 @@ app:
     BaseOutputPath: "/root/app/t2v-out"
   animatelcm:
     Endpoint: http://localhost:8080
-    InferPath: /api/v2/infer/animate_lcm
+    InferPath: /api/v1/infer/animate_lcm
   asynq:
     Addr: 194.233.85.239:6379
     Password: braly@123
