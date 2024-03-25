@@ -70,29 +70,30 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 
 	result, err := r.inferencePort.Infer(ctx, cmd)
 	if err != nil {
-		go r.sendNoti(ctx, payload.UserID, payload.Agent, taskID, "", false)
+		go r.sendNoti(payload.UserID, payload.Agent, taskID, "", false)
 		return err
 	}
 	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", taskID, payload.TargetFileName)
 
 	if err := r.objectStoragePort.UploadFilePath(ctx, result.VideoPath, payload.TargetFileName); err != nil {
 		log.Errorf("upload video file error: %v", err)
-		go r.sendNoti(ctx, payload.UserID, payload.Agent, taskID, "", false)
+		go r.sendNoti(payload.UserID, payload.Agent, taskID, "", false)
 		return err
 	}
 
 	thumbnail := strings.ReplaceAll(payload.TargetFileName, ".mp4", "_thumbnail.jpg")
 	if err := r.objectStoragePort.UploadFilePath(ctx, result.ThumbnailPath, thumbnail); err != nil {
 		log.Errorf("upload thumbnail error: %v", err)
-		go r.sendNoti(ctx, payload.UserID, payload.Agent, taskID, "", false)
+		go r.sendNoti(payload.UserID, payload.Agent, taskID, "", false)
 		return err
 	}
 
-	go r.sendNoti(ctx, payload.UserID, payload.Agent, taskID, thumbnail, true)
+	go r.sendNoti(payload.UserID, payload.Agent, taskID, thumbnail, true)
 	return nil
 }
 
-func (r *T2VHandler) sendNoti(ctx context.Context, userID, agent, taskID, imageURL string, success bool) {
+func (r *T2VHandler) sendNoti(userID, agent, taskID, imageURL string, success bool) {
+	ctx := context.Background()
 	subs, err := r.notiSubscriptionPort.FindByUserID(ctx, userID)
 	if err != nil {
 		log.Errorf("find user subscription error: %v", err)
