@@ -11,7 +11,8 @@ import (
 	"strings"
 )
 
-var AppV2Ver = semver.New("1.1.2")
+var AndroidV2Ver = semver.New("1.1.2")
+var IOSV2Ver = semver.New("1.1.5")
 
 func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresProperties) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -25,12 +26,16 @@ func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresPr
 			return
 		}
 
+		appVer, err := semver.NewVersion(c.GetHeader("X-App-Version"))
 		agent := c.GetHeader("X-Agent")
 		if agent != "" && strings.ToLower(agent[:3]) == "ios" {
-			agent = "ios"
+			if err == nil && appVer.Compare(*IOSV2Ver) != -1 {
+				agent = "iosV2"
+			} else {
+				agent = "ios"
+			}
 		} else {
-			appVer, err := semver.NewVersion(c.GetHeader("X-App-Version"))
-			if err == nil && appVer.Compare(*AppV2Ver) != -1 {
+			if err == nil && appVer.Compare(*AndroidV2Ver) != -1 {
 				agent = "androidV2"
 			} else {
 				agent = "android"

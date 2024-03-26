@@ -12,6 +12,7 @@ type AuthClient struct {
 	Android   *auth.Client
 	AndroidV2 *auth.Client
 	IOS       *auth.Client
+	IOSV2     *auth.Client
 }
 
 func NewFirebaseAuthClient(app *Application) (*AuthClient, error) {
@@ -31,10 +32,16 @@ func NewFirebaseAuthClient(app *Application) (*AuthClient, error) {
 		return nil, fmt.Errorf("error initializing firebase auth client for ios: %v", err)
 	}
 
+	iosAuthClientV2, err := app.IOS.Auth(context.Background())
+	if err != nil {
+		return nil, fmt.Errorf("error initializing firebase auth client for ios V2: %v", err)
+	}
+
 	return &AuthClient{
 		Android:   androidAuthClient,
 		AndroidV2: androidAuthClientV2,
 		IOS:       iosAuthClient,
+		IOSV2:     iosAuthClientV2,
 	}, nil
 }
 
@@ -45,10 +52,15 @@ func (r *AuthClient) Authenticate(ctx context.Context, agent, token string) (ent
 
 	if agent == "ios" {
 		tokenData, err = r.IOS.VerifyIDToken(ctx, token)
+	} else if agent == "iosV2" {
+		tokenData, err = r.IOSV2.VerifyIDToken(ctx, token)
 	} else if agent == "android" {
 		tokenData, err = r.Android.VerifyIDToken(ctx, token)
-	} else {
+	} else if agent == "androidV2" {
 		tokenData, err = r.AndroidV2.VerifyIDToken(ctx, token)
+	} else {
+		log.Warnf("invalid agent, request origin could not be from app: %s", agent)
+		return entities.TokenData{}, fmt.Errorf("invalid agent: %s", agent)
 	}
 
 	if err != nil {
