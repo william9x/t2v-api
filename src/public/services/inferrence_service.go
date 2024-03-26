@@ -8,23 +8,26 @@ import (
 	"github.com/Braly-Ltd/t2v-api-core/ports"
 	"github.com/Braly-Ltd/t2v-api-core/utils"
 	"github.com/Braly-Ltd/t2v-api-public/requests"
-	"github.com/Braly-Ltd/t2v-api-public/resources"
+	"github.com/golibs-starter/golib/log"
 	"github.com/hibiken/asynq"
 	"time"
 )
 
 type InferenceService struct {
-	objectStoragePort ports.ObjectStoragePort
-	taskQueuePort     ports.TaskQueuePort
+	objectStoragePort  ports.ObjectStoragePort
+	taskQueuePort      ports.TaskQueuePort
+	taskInfoRepository ports.TaskInfoRepositoryPort
 }
 
 func NewInferenceService(
 	objectStoragePort ports.ObjectStoragePort,
 	taskQueuePort ports.TaskQueuePort,
+	taskInfoRepository ports.TaskInfoRepositoryPort,
 ) *InferenceService {
 	return &InferenceService{
-		objectStoragePort: objectStoragePort,
-		taskQueuePort:     taskQueuePort,
+		objectStoragePort:  objectStoragePort,
+		taskQueuePort:      taskQueuePort,
+		taskInfoRepository: taskInfoRepository,
 	}
 }
 
@@ -52,21 +55,26 @@ func (r *InferenceService) FilterInference(ctx context.Context, ids []string) ([
 func (r *InferenceService) CreateInference(
 	ctx context.Context,
 	req requests.CreateInferenceRequest,
-) (resources.CreateInference, error) {
+) (entities.InferTaskInfo, error) {
 	taskId, err := utils.NewUUID()
 	if err != nil {
-		return resources.CreateInference{}, fmt.Errorf("generate task id error: %v", err)
+		return entities.InferTaskInfo{}, fmt.Errorf("generate task id error: %v", err)
 	}
 
 	targetFileName := fmt.Sprintf("target/%s%s", taskId, constants.FileTypeDefault)
 	targetFileURL, err := r.objectStoragePort.GetPreSignedObject(ctx, targetFileName)
 	if err != nil {
-		return resources.CreateInference{}, fmt.Errorf("get pre-signed target object error: %v", err)
+		return entities.InferTaskInfo{}, fmt.Errorf("get pre-signed target object error: %v", err)
 	}
 
-	packed, err := newPackedInferPayload(req, targetFileName, targetFileURL)
+	payload := newInferPayload(req, targetFileName, targetFileURL)
 	if err != nil {
-		return resources.CreateInference{}, fmt.Errorf("pack payload error: %v", err)
+		return entities.InferTaskInfo{}, fmt.Errorf("pack payload error: %v", err)
+	}
+
+	packed, err := payload.Packed()
+	if err != nil {
+		return entities.InferTaskInfo{}, fmt.Errorf("pack payload error: %v", err)
 	}
 
 	// TODO: Select queue based on model type
@@ -84,35 +92,37 @@ func (r *InferenceService) CreateInference(
 	}
 	task := asynq.NewTask(req.Type, packed, taskOpts...)
 	if err := r.taskQueuePort.Enqueue(ctx, task); err != nil {
-		return resources.CreateInference{}, err
+		return entities.InferTaskInfo{}, err
 	}
 
-	return resources.CreateInference{
-		ID:        utils.BuildInferenceKey(queue, taskId),
-		Model:     req.Model,
-		Type:      req.Type,
-		Status:    asynq.TaskStatePending.String(),
-		MaxRetry:  maxRetry,
-		Deadline:  deadline.Format(time.RFC3339),
-		Retention: time.Now().Add(retention).Format(time.RFC3339),
-	}, nil
+	taskInfo := entities.InferTaskInfo{
+		TaskID:        taskId,
+		Queue:         queue,
+		Type:          req.Type,
+		Status:        asynq.TaskStatePending.String(),
+		MaxRetry:      maxRetry,
+		Deadline:      deadline.Format(time.RFC3339),
+		RetentionUtil: time.Now().Add(retention).Format(time.RFC3339),
+		Payload:       payload,
+	}
+
+	go r.saveTaskInfo(taskInfo)
+
+	return taskInfo, nil
 }
 
-func newPackedInferPayload(
-	req requests.CreateInferenceRequest,
-	targetFileName string,
-	targetFileURL string,
-) ([]byte, error) {
-	payload := newInferPayload(req, targetFileName, targetFileURL)
-	return payload.Packed()
+func (r *InferenceService) saveTaskInfo(taskInfo entities.InferTaskInfo) {
+	if err := r.taskInfoRepository.Save(context.Background(), taskInfo); err != nil {
+		log.Errorf("save task info %+v error: %v", taskInfo, err)
+	}
 }
 
 func newInferPayload(
 	req requests.CreateInferenceRequest,
 	targetFileName string,
 	targetFileURL string,
-) *entities.InferPayload {
-	return &entities.InferPayload{
+) entities.InferPayload {
+	return entities.InferPayload{
 		Model:             req.Model,
 		Prompt:            req.Prompt,
 		NegativePrompt:    req.NegativePrompt,

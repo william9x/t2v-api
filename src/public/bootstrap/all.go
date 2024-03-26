@@ -69,6 +69,9 @@ func All() fx.Option {
 		fx.Provide(fx.Annotate(
 			adapter.NewNotificationSubscriptionAdapter, fx.As(new(ports.NotificationSubscriptionPort))),
 		),
+		fx.Provide(fx.Annotate(
+			adapter.NewTaskInfoAdapter, fx.As(new(ports.TaskInfoRepositoryPort))),
+		),
 
 		// Provide use cases
 		fx.Provide(services.NewInferenceService),

@@ -16,12 +16,6 @@ type NotificationSubscriptionAdapter struct {
 	client *mongo.Client
 }
 
-const (
-	databaseName        = "sira"
-	notiSubscriptions   = "noti_subscriptions"
-	inferenceCollection = "inferences"
-)
-
 // NewNotificationSubscriptionAdapter ...
 func NewNotificationSubscriptionAdapter(props *properties.MongoProperties, client *mongo.Client) *NotificationSubscriptionAdapter {
 	return &NotificationSubscriptionAdapter{props: props, client: client}
@@ -62,5 +56,5 @@ func (r *NotificationSubscriptionAdapter) FindByUserID(ctx context.Context, user
 }
 
 func (r *NotificationSubscriptionAdapter) collection() *mongo.Collection {
-	return r.client.Database(databaseName).Collection(notiSubscriptions)
+	return r.client.Database(mongodbDatabaseName).Collection(mongodbNotiSubCollection)
 }

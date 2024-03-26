@@ -161,12 +161,20 @@ func (c *InferenceController) CreateInference(ctx *gin.Context) {
 		req.Agent = strings.ToLower(req.Agent)
 	}
 
-	resp, err := c.inferenceService.CreateInference(ctx, req)
+	taskInfo, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)
 		response.WriteError(ctx.Writer, exception.New(50000, "Internal Server Error"))
 		return
 	}
 
-	response.Write(ctx.Writer, response.Created(resp))
+	response.Write(ctx.Writer, response.Created(resources.CreateInference{
+		ID:        utils.BuildInferenceKey(taskInfo.Queue, taskInfo.TaskID),
+		Model:     taskInfo.Payload.Model,
+		Type:      taskInfo.Type,
+		Status:    taskInfo.Status,
+		MaxRetry:  taskInfo.MaxRetry,
+		Deadline:  taskInfo.Deadline,
+		Retention: taskInfo.RetentionUtil,
+	}))
 }

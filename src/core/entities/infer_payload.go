@@ -5,19 +5,21 @@ import (
 )
 
 type InferPayload struct {
-	UserID            string
-	Agent             string
-	Model             string
-	Prompt            string
-	NegativePrompt    string
-	NumInferenceSteps int
-	NumFrames         int
-	Width             int
-	Height            int
-	GuidanceScale     float32
-	TargetFileName    string
-	TargetFileURL     string
-	EnqueuedAt        int64
+	UserID            string  `bson:"user_id"`
+	Agent             string  `bson:"agent"`
+	Model             string  `bson:"model"`
+	Prompt            string  `bson:"prompt"`
+	NegativePrompt    string  `bson:"negative_prompt"`
+	NumInferenceSteps int     `bson:"num_inference_steps"`
+	NumFrames         int     `bson:"num_frames"`
+	Width             int     `bson:"width"`
+	Height            int     `bson:"height"`
+	GuidanceScale     float32 `bson:"guidance_scale"`
+	TargetFileName    string  `bson:"target_file_name"`
+	TargetFileURL     string  `bson:"target_file_url"`
+
+	// @Deprecated
+	EnqueuedAt int64 `bson:"-"`
 }
 
 func (p *InferPayload) Packed() ([]byte, error) {

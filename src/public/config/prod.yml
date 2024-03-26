@@ -21,6 +21,9 @@ app:
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
     UseSSL: true
     BucketName: sira
+  mongo:
+    hosts:
+      - sira:xpxXjBeASKRmegy@10.0.0.3:27017/sira?compressors=snappy,zlib,zstd
   asynq:
     Addr: 10.0.0.2:6379
     Password: 2V324tBa6x0joVSzza3OG
