@@ -101,7 +101,7 @@ func (r *T2VHandler) sendNoti(userID, agent, taskID, imageURL string, success bo
 	log.Debugc(ctx, "found %d subscriptions for user %s", len(subs), userID)
 
 	title := "🎬 Production Complete!"
-	body := "Your video is ready for the spotlight. Watch you creation!"
+	body := "Your video is ready for the spotlight. Watch your creation!"
 	image, _ := r.objectStoragePort.GetPreSignedObject(ctx, imageURL)
 	if !success {
 		title = "🔄 Ooops! Take Another Shot!"
