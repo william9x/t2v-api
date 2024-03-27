@@ -21,11 +21,12 @@ type RegisterRoutersIn struct {
 	SwaggerProps          *properties.SwaggerProperties
 	MiddlewaresProperties *properties.MiddlewaresProperties
 
-	Actuator               *actuator.Endpoint
-	InferenceController    *controllers.InferenceController
-	ModelController        *controllers.ModelController
-	PromptController       *controllers.PromptController
-	NotificationController *controllers.NotificationController
+	Actuator                 *actuator.Endpoint
+	InferenceController      *controllers.InferenceController
+	ModelController          *controllers.ModelController
+	PromptController         *controllers.PromptController
+	NotificationController   *controllers.NotificationController
+	NotificationControllerV2 *controllers.NotificationControllerV2
 
 	AuthenticationPort ports.AuthenticationPort
 }
@@ -57,4 +58,10 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 
 	// Notification APIs
 	apiV1Group.POST("/noti/subs", p.NotificationController.Subscribe)
+
+	apiV2Group := group.Group("/api/v2")
+	apiV2Group.Use(middlewares.Authenticate(p.AuthenticationPort, p.MiddlewaresProperties))
+
+	// Notification APIs
+	apiV2Group.POST("/noti/subs", p.NotificationControllerV2.Subscribe)
 }

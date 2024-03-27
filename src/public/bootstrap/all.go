@@ -83,6 +83,7 @@ func All() fx.Option {
 		fx.Provide(controllers.NewModelController),
 		fx.Provide(controllers.NewPromptController),
 		fx.Provide(controllers.NewNotificationController),
+		fx.Provide(controllers.NewNotificationControllerV2),
 
 		// Provide gin http server auto config,
 		// actuator endpoints and application routers
