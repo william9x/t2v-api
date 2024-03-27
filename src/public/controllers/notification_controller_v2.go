@@ -22,7 +22,7 @@ func NewNotificationControllerV2(
 
 // Subscribe
 //
-//	@ID				subscribe
+//	@ID				subscribe-v2
 //	@Summary 		Subscribe for notifications
 //	@Description
 //	@Tags			NotificationControllerV2

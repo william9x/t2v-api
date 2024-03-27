@@ -436,6 +436,59 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v2/noti/subs": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NotificationControllerV2"
+                ],
+                "summary": "Subscribe for notifications",
+                "operationId": "subscribe-v2",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User's device ID or user's account (not anonymous) ID",
+                        "name": "user_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User's registration token for push notifications",
+                        "name": "user_token",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "firebase",
+                        "description": "Notification provider",
+                        "name": "token_provider",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

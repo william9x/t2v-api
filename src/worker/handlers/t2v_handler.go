@@ -82,12 +82,6 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	}
 
 	thumbnail := strings.ReplaceAll(payload.TargetFileName, ".mp4", "_thumbnail.jpg")
-	if err := r.objectStoragePort.UploadFilePath(ctx, result.ThumbnailPath, thumbnail); err != nil {
-		log.Errorf("upload thumbnail error: %v", err)
-		go r.sendNoti(payload.UserID, payload.Agent, taskID, "", false)
-		return err
-	}
-
 	go r.sendNoti(payload.UserID, payload.Agent, taskID, thumbnail, true)
 	return nil
 }

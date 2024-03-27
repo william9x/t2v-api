@@ -362,4 +362,40 @@ paths:
       summary: Get random prompts
       tags:
       - PromptController
+  /api/v2/noti/subs:
+    post:
+      consumes:
+      - multipart/form-data
+      operationId: subscribe-v2
+      parameters:
+      - description: User's device ID or user's account (not anonymous) ID
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: User's registration token for push notifications
+        in: formData
+        name: user_token
+        required: true
+        type: string
+      - default: firebase
+        description: Notification provider
+        in: formData
+        name: token_provider
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Subscribe for notifications
+      tags:
+      - NotificationControllerV2
 swagger: "2.0"
