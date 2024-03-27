@@ -10,6 +10,7 @@ type MessagingClient struct {
 	Android   *messaging.Client
 	AndroidV2 *messaging.Client
 	IOS       *messaging.Client
+	IOSV2     *messaging.Client
 }
 
 func NewFirebaseMessagingClient(app *Application) (*MessagingClient, error) {
@@ -29,17 +30,23 @@ func NewFirebaseMessagingClient(app *Application) (*MessagingClient, error) {
 		return nil, fmt.Errorf("error initializing firebase msg client for ios: %v", err)
 	}
 
+	iosV2MsgClient, err := app.IOSV2.Messaging(context.Background())
+	if err != nil {
+		return nil, fmt.Errorf("error initializing firebase msg client for ios: %v", err)
+	}
+
 	return &MessagingClient{
 		Android:   androidMsgClient,
 		AndroidV2: androidMsgClientV2,
 		IOS:       iosMsgClient,
+		IOSV2:     iosV2MsgClient,
 	}, nil
 }
 
 func (r *MessagingClient) SendNoti(ctx context.Context, agent, taskID, title, body, image, token string) (string, error) {
 	var msgClient *messaging.Client
 	if agent == "ios" {
-		msgClient = r.IOS
+		msgClient = r.IOSV2
 	} else if agent == "android" {
 		msgClient = r.AndroidV2
 	}

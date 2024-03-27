@@ -4,6 +4,11 @@ app:
     development: true
     JsonOutputMode: true
   swagger.enabled: false
+  firebase:
+    CredentialsFileAndroid: "/root/app/certs/sira-firebase-service-account.json"
+    CredentialsFileAndroidV2: "/root/app/certs/sira-android-firebase-service-account.json"
+    CredentialsFileIOS: "/root/app/certs/sira-ios-firebase-service-account.json"
+    CredentialsFileIOSV2: "/root/app/certs/sira-ios-firebase-service-account-v2.json"
   minio:
     Endpoint: storage.bralyvn.com
     PublicEndpoint: https://storage.bralyvn.com

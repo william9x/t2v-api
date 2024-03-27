@@ -32,7 +32,7 @@ func NewFirebaseAuthClient(app *Application) (*AuthClient, error) {
 		return nil, fmt.Errorf("error initializing firebase auth client for ios: %v", err)
 	}
 
-	iosAuthClientV2, err := app.IOS.Auth(context.Background())
+	iosAuthClientV2, err := app.IOSV2.Auth(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("error initializing firebase auth client for ios V2: %v", err)
 	}
