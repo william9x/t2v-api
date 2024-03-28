@@ -46,13 +46,12 @@ services:
       REDIS_PASSWORD: braly@123
 
   asynqmon:
-    container_name: t2v-asynqmon
-    image: hibiken/asynqmon:latest
+    image: namnam206/queue-monitor:latest
     restart: always
     networks:
       - backend-private
     ports:
-      - "8085:8080"
+      - "8086:8080"
 #    links:
 #      - redis
 #    depends_on:
@@ -61,7 +60,7 @@ services:
       REDIS_ADDR: 94.72.114.19:6379
       REDIS_DB: 1
       REDIS_PASSWORD: 2V324tBa6x0joVSzza3OG
-      READ_ONLY: false
+      READ_ONLY: true
 
 networks:
   backend-private:
