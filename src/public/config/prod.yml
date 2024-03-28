@@ -10,7 +10,7 @@ app:
     CredentialsFileIOS: "/app/ssl/sira-ios-firebase-service-account.json"
     CredentialsFileIOSV2: "/app/ssl/sira-ios-firebase-service-account-v2.json"
   middlewares:
-    AuthenticationEnable: false
+    AuthenticationEnable: true
   logging:
     development: false
   swagger.enabled: false
