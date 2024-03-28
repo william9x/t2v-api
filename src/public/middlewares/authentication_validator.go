@@ -6,6 +6,7 @@ import (
 	"github.com/coreos/go-semver/semver"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
+	"github.com/golibs-starter/golib/web/constant"
 	"github.com/golibs-starter/golib/web/context"
 	"github.com/golibs-starter/golib/web/response"
 	"strings"
@@ -28,6 +29,10 @@ func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresPr
 
 		appVer, err := semver.NewVersion(c.GetHeader("X-App-Version"))
 		agent := c.GetHeader("X-Agent")
+		if userAgent := c.GetHeader(constant.HeaderUserAgent); userAgent != "" {
+			agent = userAgent
+		}
+
 		if agent != "" && strings.ToLower(agent[:3]) == "ios" {
 			if err == nil && appVer.Compare(*IOSV2Ver) != -1 {
 				agent = "iosV2"
@@ -43,7 +48,7 @@ func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresPr
 		}
 		tokenData, err := port.Authenticate(c, agent, token)
 		if err != nil {
-			c.AbortWithStatusJSON(401, response.Error(exception.New(403, "invalid access token")))
+			c.AbortWithStatusJSON(403, response.Error(exception.New(403, "invalid access token")))
 			return
 		}
 

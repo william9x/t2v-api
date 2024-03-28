@@ -18,7 +18,7 @@ app:
     BucketName: sira
   mongo:
     hosts:
-      - sira:xpxXjBeASKRmegy@10.0.0.3:27017/sira?compressors=snappy,zlib,zstd
+      - sira:xpxXjBeASKRmegy@94.72.114.17:27017/sira?compressors=snappy,zlib,zstd
   files:
     BaseOutputPath: "/root/app/t2v-out"
   animatelcm:

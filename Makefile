@@ -34,10 +34,10 @@ worker:
 
 build_prod:
 	docker build \
-		-t namnam206/sira-api:1.5.0 \
+		-t namnam206/sira-api:1.5.1 \
 		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
 		.
 
 push_prod:
-	docker push namnam206/sira-api:1.5.0
+	docker push namnam206/sira-api:1.5.1
