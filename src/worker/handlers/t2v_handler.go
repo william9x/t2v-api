@@ -56,6 +56,11 @@ func (r *T2VHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	}
 	log.Debugc(ctx, "task payload: %+v", payload)
 
+	if payload.Prompt == "error" {
+		go r.sendNoti(payload.UserID, payload.Agent, taskID, "", false)
+		return fmt.Errorf("debu only: task %s is failed", taskID)
+	}
+
 	cmd := entities.InferenceCommand{
 		Prompt:            payload.Prompt,
 		NegativePrompt:    payload.NegativePrompt,
