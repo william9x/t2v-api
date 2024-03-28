@@ -54,6 +54,13 @@ func (r *NotificationSubscriptionAdapter) FindByUserID(ctx context.Context, user
 
 	return subscriptions, nil
 }
+func (r *NotificationSubscriptionAdapter) Delete(ctx context.Context, userID, token string) error {
+	_, err := r.collection().DeleteOne(ctx, bson.M{"user_id": userID, "token": token})
+	if err != nil {
+		return fmt.Errorf("error while deleting user_id: %w", err)
+	}
+	return nil
+}
 
 func (r *NotificationSubscriptionAdapter) collection() *mongo.Collection {
 	return r.client.Database(mongodbDatabaseName).Collection(mongodbNotiSubCollection)

@@ -118,9 +118,19 @@ func (r *T2VHandler) sendNoti(userID, agent, taskID, imageURL string, success bo
 			image,
 			sub.UserToken,
 		)
-		if err != nil {
-			log.Errorf("send notification error: %v", err)
+		if err == nil {
+			log.Debugc(ctx, "notification sent: %s", sentId)
+			return
 		}
-		log.Debugc(ctx, "notification sent: %s", sentId)
+
+		log.Errorf("send notification error: %v", err)
+		if !strings.Contains(fmt.Sprintf("%v", err), "registration-token-not-registered") {
+			return
+		}
+
+		log.Debugc(ctx, "not-registered, removing subscription for user %s token %s", userID, sub.UserToken)
+		if err := r.notiSubscriptionPort.Delete(ctx, userID, sub.UserToken); err != nil {
+			log.Errorf("delete subscription error: %v", err)
+		}
 	}
 }
