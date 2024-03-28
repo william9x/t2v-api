@@ -8,6 +8,7 @@ require (
 	github.com/golibs-starter/golib v1.0.1
 	github.com/hibiken/asynq v0.24.2-0.20240315053219-8df0bfa5834b
 	github.com/minio/minio-go/v7 v7.0.67
+	github.com/redis/go-redis/v9 v9.4.0
 	go.mongodb.org/mongo-driver v1.14.0
 	google.golang.org/api v0.122.0
 )
@@ -51,7 +52,6 @@ require (
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/redis/go-redis/v9 v9.4.0 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/rs/xid v1.5.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
